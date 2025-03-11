@@ -14,3 +14,4 @@
  - [ ] the program has layered architecture and contains at least `logic`, and `data` layers
 - [ ] layers are clearly stated using **programming language terms only**
 - [ ] **Automatic testing**
+ - [ ] the main functionality of the program must be unit-tested
