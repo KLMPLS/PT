@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MyApplication.Logic;
+﻿using MyApplication.Logic;
 namespace TestProject
 {
     [TestClass]
