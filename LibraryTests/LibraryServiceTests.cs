@@ -1,6 +1,6 @@
-﻿using Library.Data;
-using Library.Logic;
-namespace Library.Tests
+﻿using LibraryData;
+using LibraryLogic;
+namespace LibraryLogicTests
 {
     [TestClass]
     public class LibraryServiceTests

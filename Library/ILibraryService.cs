@@ -1,6 +1,6 @@
-﻿namespace Library.Logic
+﻿namespace LibraryLogic
 {
-    using Library.Data;
+    using LibraryData;
     public interface ILibraryService
     {
         void AddBook(Book book);

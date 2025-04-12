@@ -1,6 +1,6 @@
-﻿namespace Library.Logic
+﻿namespace LibraryLogic
 {
-    using Library.Data;
+    using LibraryData;
     public class LibraryService : ILibraryService
     {
         private IDataStorage storage;

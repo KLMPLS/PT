@@ -1,4 +1,4 @@
-﻿namespace Library.Data
+﻿namespace LibraryData
 {
     public class Book
     {
