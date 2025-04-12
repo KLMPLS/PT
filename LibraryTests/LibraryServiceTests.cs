@@ -23,6 +23,9 @@ namespace LibraryLogicTests
             Assert.AreEqual(1, storage.Books.Count);
             Assert.AreEqual(1, storage.States.Count);
             Assert.AreEqual(book.TotalCopies, storage.States[0].AvailableCopies);
+            service.AddBook(book);
+            Assert.AreEqual(book.TotalCopies * 2, storage.States[0].AvailableCopies);
+
         }
 
         [TestMethod]
@@ -53,6 +56,7 @@ namespace LibraryLogicTests
             context.Customers.Add(user);
             service.AddBook(book);
             service.BorrowBook(book.Id, user.Id); // simulate borrowing
+            Assert.IsFalse(service.BorrowBook(book.Id + "ksdnflksjdnmf", user.Id)); //fails
 
             var result = service.ReturnBook(book.Id, user.Id);
 
@@ -78,6 +82,19 @@ namespace LibraryLogicTests
             var result = service.BorrowBook(book.Id, user.Id);
 
             Assert.IsFalse(result);
+        }
+        [TestMethod]
+        public void AvailableCopiesTest()
+        {
+            var context = new InMemoryDataStorage();
+            var service = new LibraryService(context);
+            var book = CreateSampleBook();
+            var user = CreateSampleUser();
+            context.Customers.Add(user);
+            service.AddBook(book);
+
+            Assert.IsTrue(3 == service.GetAvailableCopies(book.Id));
+            Assert.IsTrue(0 == service.GetAvailableCopies("not a real book"));
         }
     }
 }
