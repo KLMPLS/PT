@@ -56,7 +56,7 @@ namespace LibraryLogicTests
             context.Customers.Add(user);
             service.AddBook(book);
             service.BorrowBook(book.Id, user.Id); // simulate borrowing
-            Assert.IsFalse(service.BorrowBook(book.Id + "ksdnflksjdnmf", user.Id)); //fails
+            Assert.IsFalse(service.ReturnBook(book.Id + "ksdnflksjdnmf", user.Id)); //fails
 
             var result = service.ReturnBook(book.Id, user.Id);
 

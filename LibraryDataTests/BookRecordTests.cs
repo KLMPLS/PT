@@ -21,6 +21,11 @@ namespace LibraryData.Tests
             Assert.AreEqual(record.Customer, customer);
             Assert.AreEqual(record.Book, book);
             Assert.AreEqual(record.Type, BookRecordType.Borrowed);
+            Console.WriteLine(record.Date);
+            DateTime expected = record.Date;
+            DateTime actual = DateTime.Now;
+            TimeSpan tolerance = TimeSpan.FromSeconds(1);
+            Assert.IsTrue(Math.Abs((expected - actual).TotalMilliseconds) < tolerance.TotalMilliseconds);
         }
     }
 }
