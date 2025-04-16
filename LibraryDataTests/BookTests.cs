@@ -11,12 +11,12 @@ namespace LibraryData.Tests
     [TestClass()]
     public class BookTests
     {
-        private Book book = new("1", "SampleTitle", "SampleAuthor", "SampleGenre", 5);
+        private Book book = new(1, "SampleTitle", "SampleAuthor", "SampleGenre");
 
         [TestMethod()]
         public void BookTest()
         {
-            Assert.AreEqual(book.Id, "1");
+            Assert.AreEqual(book.Id, 1);
             Assert.AreEqual(book.Title, "SampleTitle");
             Assert.AreEqual(book.Author, "SampleAuthor");
             Assert.AreEqual(book.Genre, "SampleGenre");
@@ -25,7 +25,7 @@ namespace LibraryData.Tests
         [TestMethod()]
         public void ToStringTest()
         {
-            Assert.AreEqual(book.ToString(), "SampleTitle by SampleAuthor [SampleGenre] (5 copies)");
+            Assert.AreEqual(book.ToString(), "SampleTitle by SampleAuthor [SampleGenre]");
         }
     }
 }

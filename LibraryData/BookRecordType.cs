@@ -1,6 +1,6 @@
 ﻿namespace LibraryData
 {
-    public enum BookRecordType
+    internal enum BookRecordType
     {
         Borrowed,
         Returned

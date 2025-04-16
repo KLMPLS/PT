@@ -1,14 +1,14 @@
 ﻿namespace LibraryData
 {
-    public class InventoryState
+    internal class InventoryState
     {
         public Book Book { get; set; }
         public int AvailableCopies { get; set; }
 
-        public InventoryState(Book book)
+        public InventoryState(Book book,int av_copies)
         {
             Book = book;
-            AvailableCopies = book.TotalCopies;
+            AvailableCopies = av_copies;
         }
     }
 }

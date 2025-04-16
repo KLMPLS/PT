@@ -1,6 +1,6 @@
 ﻿namespace LibraryData
 {
-    public class BookRecord
+    internal class BookRecord
     {
         public int Id { get; set; }
         public Customer Customer { get; set; }

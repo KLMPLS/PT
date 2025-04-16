@@ -1,10 +1,13 @@
 ﻿namespace LibraryData
 {
-    public interface IDataStorage
+    public abstract class IDataStorage
     {
-        List<Book> Books { get; }
-        List<Customer> Customers { get; }
-        List<BookRecord> Records { get; }
-        List<InventoryState> States { get; }
+        public abstract void AddBook(string title,string author,string genre);
+        public abstract void AddCustomer(string name, string email);
+        public abstract void AddRecord(int customerId, int bookId, int typeid);
+        public abstract void AddInventoryState(int bookId, int availableCopies);
+        public abstract void UpdateInventoryState(int bookId, int change);
+
+
     }
 }

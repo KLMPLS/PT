@@ -1,11 +1,13 @@
 ﻿namespace LibraryLogic
 {
     using LibraryData;
-    public interface ILibraryService
+    public abstract class ILibraryService
     {
-        void AddBook(Book book);
-        bool BorrowBook(string id, int userId);
-        bool ReturnBook(string id, int userId);
-        int GetAvailableCopies(string id);
+        public abstract void BorrowBook(int BookId, int UserId);
+        public abstract void ReturnBook(int BookId, int UserId);
+        public abstract void AddtoInventory(int BookId, int NewCopies);
+        public abstract void RemoveFromInventory(int BookId, int MinusCopi);
+
+
     }
 }

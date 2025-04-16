@@ -11,14 +11,14 @@ namespace LibraryData.Tests
     [TestClass()]
     public class InventoryStateTests
     {
-        private Book book = new("1", "SampleTitle", "SampleAuthor", "SampleGenre", 5);
+        private Book book = new(1, "SampleTitle", "SampleAuthor", "SampleGenre");
 
         [TestMethod()]
         public void InventoryStateTest()
         {
-            InventoryState state = new(book);
+            InventoryState state = new(book,5);
             Assert.AreEqual(state.Book, book);
-            Assert.AreEqual(state.AvailableCopies, book.TotalCopies);
+            Assert.AreEqual(state.AvailableCopies, 5);
         }
     }
 }

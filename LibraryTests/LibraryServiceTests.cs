@@ -1,100 +1,67 @@
-﻿using LibraryData;
-using LibraryLogic;
+﻿using LibraryLogic;
+using LibraryData;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace LibraryLogicTests
 {
     [TestClass]
     public class LibraryServiceTests
     {
-        private Book CreateSampleBook() =>
-            new Book("111", "Test Book", "Author", "Fiction", 3);
-
-        private Customer CreateSampleUser() =>
-            new Customer(1, "Alice", "alice@example.com");
-
-        [TestMethod]
-        public void AddBook_ShouldAddToCatalog_AndCreateState()
+        public InMemoryDataStorage init()
         {
-            var storage = new InMemoryDataStorage();
-            var service = new LibraryService(storage);
-            var book = CreateSampleBook();
-
-            service.AddBook(book);
-
-            Assert.AreEqual(1, storage.Books.Count);
-            Assert.AreEqual(1, storage.States.Count);
-            Assert.AreEqual(book.TotalCopies, storage.States[0].AvailableCopies);
-            service.AddBook(book);
-            Assert.AreEqual(book.TotalCopies * 2, storage.States[0].AvailableCopies);
-
+            InMemoryDataStorage dataStorage = new InMemoryDataStorage();
+            dataStorage.AddBook("Test Book", "Test Author", "Test Genre");
+            dataStorage.AddInventoryState(1, 5);
+            dataStorage.AddCustomer("Kutin", "nullKutin@email.com");
+            return dataStorage;
         }
 
-        [TestMethod]
-        public void BorrowBook_ShouldSucceed_AndReduceAvailability()
+        [TestMethod()]
+        public void BorrowBookTest()
         {
-            var context = new InMemoryDataStorage();
-            var service = new LibraryService(context);
-            var book = CreateSampleBook();
-            var user = CreateSampleUser();
-            context.Customers.Add(user);
-            service.AddBook(book);
+            InMemoryDataStorage dataStorage = init();
+            LibraryService libraryService = new(dataStorage);
 
-            var result = service.BorrowBook(book.Id, user.Id);
+            libraryService.BorrowBook(1, 1);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual(2, context.States[0].AvailableCopies);
-            Assert.AreEqual(1, context.Records.Count);
-            Assert.AreEqual(BookRecordType.Borrowed, context.Records[0].Type);
+            Assert.AreEqual(4, dataStorage.States[0].AvailableCopies);
+            Assert.AreEqual(1, dataStorage.Records.Count);
+            Assert.AreEqual(BookRecordType.Borrowed, dataStorage.Records[0].Type);
         }
 
-        [TestMethod]
-        public void ReturnBook_ShouldSucceed_AndIncreaseAvailability()
+        [TestMethod()]
+        public void ReturnBookTest()
         {
-            var context = new InMemoryDataStorage();
-            var service = new LibraryService(context);
-            var book = CreateSampleBook();
-            var user = CreateSampleUser();
-            context.Customers.Add(user);
-            service.AddBook(book);
-            service.BorrowBook(book.Id, user.Id); // simulate borrowing
-            Assert.IsFalse(service.BorrowBook(book.Id + "ksdnflksjdnmf", user.Id)); //fails
+            InMemoryDataStorage dataStorage = init();
+            LibraryService libraryService = new(dataStorage);
 
-            var result = service.ReturnBook(book.Id, user.Id);
+            libraryService.ReturnBook(1, 1);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual(3, context.States[0].AvailableCopies);
-            Assert.AreEqual(2, context.Records.Count);
-            Assert.AreEqual(BookRecordType.Returned, context.Records.Last().Type);
+            Assert.AreEqual(6, dataStorage.States[0].AvailableCopies);
+            Assert.AreEqual(1, dataStorage.Records.Count);
+            Assert.AreEqual(BookRecordType.Returned, dataStorage.Records[0].Type);
         }
 
-        [TestMethod]
-        public void BorrowBook_ShouldFail_WhenNoCopiesLeft()
+        [TestMethod()]
+        public void AddtoInventoryTest()
         {
-            var context = new InMemoryDataStorage();
-            var service = new LibraryService(context);
-            var book = CreateSampleBook();
-            var user = CreateSampleUser();
-            context.Customers.Add(user);
-            service.AddBook(book);
+            InMemoryDataStorage dataStorage = init();
+            LibraryService libraryService = new(dataStorage);
 
-            for (int i = 0; i < book.TotalCopies; i++)
-                service.BorrowBook(book.Id, user.Id);
+            libraryService.AddtoInventory(1, 3);
 
-            var result = service.BorrowBook(book.Id, user.Id);
-
-            Assert.IsFalse(result);
+            Assert.AreEqual(8, dataStorage.States[0].AvailableCopies);
         }
-        [TestMethod]
-        public void AvailableCopiesTest()
-        {
-            var context = new InMemoryDataStorage();
-            var service = new LibraryService(context);
-            var book = CreateSampleBook();
-            var user = CreateSampleUser();
-            context.Customers.Add(user);
-            service.AddBook(book);
 
-            Assert.IsTrue(3 == service.GetAvailableCopies(book.Id));
-            Assert.IsTrue(0 == service.GetAvailableCopies("not a real book"));
+        [TestMethod()]
+        public void RemoveFromInventoryTest()
+        {
+            InMemoryDataStorage dataStorage = init();
+            LibraryService libraryService = new(dataStorage);
+
+            libraryService.RemoveFromInventory(1, 2);
+
+            Assert.AreEqual(3, dataStorage.States[0].AvailableCopies);
         }
     }
 }
