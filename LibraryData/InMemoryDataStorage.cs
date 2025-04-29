@@ -1,6 +1,6 @@
 ﻿namespace LibraryData
 {
-     public class InMemoryDataStorage : IDataStorage
+     internal class InMemoryDataStorage : IDataStorage
     {
         internal List<Book> Books { get; } = new();
         internal List<Customer> Customers { get; } = new();

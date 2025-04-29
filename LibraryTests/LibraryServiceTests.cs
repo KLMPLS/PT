@@ -7,7 +7,7 @@ namespace LibraryLogicTests
     [TestClass]
     public class LibraryServiceTests
     {
-        public InMemoryDataStorage init()
+        internal InMemoryDataStorage init()
         {
             InMemoryDataStorage dataStorage = new InMemoryDataStorage();
             dataStorage.AddBook("Test Book", "Test Author", "Test Genre");
