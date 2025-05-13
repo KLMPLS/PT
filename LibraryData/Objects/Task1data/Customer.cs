@@ -1,6 +1,6 @@
-﻿namespace LibraryData.Objects
+﻿namespace LibraryData.Objects.Task1data
 {
-    internal class Customer
+    internal class Customer : ICustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }

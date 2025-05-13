@@ -12,7 +12,7 @@ namespace LibraryData.Tests
     public class BookRecordTests
     {
         private Customer customer = new(2, "John Doe", "john.doe@gmail.com");
-        private Book book = new(1, "SampleTitle", "SampleAuthor", "SampleGenre");
+        private IBook book = new(1, "SampleTitle", "SampleAuthor", "SampleGenre");
 
         [TestMethod()]
         public void BookRecordTest() {
