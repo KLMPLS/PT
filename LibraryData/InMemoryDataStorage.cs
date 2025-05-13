@@ -1,4 +1,5 @@
-﻿using LibraryData.Objects;
+﻿using LibraryData.Objects.Task1data;
+using LibraryData.Objects;
 
 namespace LibraryData
 {
@@ -55,7 +56,7 @@ namespace LibraryData
         {
             return States.FirstOrDefault(s => s.Book.Id == bookId);
         }
-        Book FindBook(int id)
+        IBook FindBook(int id)
         {
             return Books.FirstOrDefault(b => b.Id == id);
         }

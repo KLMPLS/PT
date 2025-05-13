@@ -1,4 +1,4 @@
-﻿namespace LibraryData.Objects
+﻿namespace LibraryData.Objects.DatabaseData
 {
     internal class BookRecord
     {
