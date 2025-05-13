@@ -1,4 +1,4 @@
-﻿namespace LibraryData
+﻿namespace LibraryLogicTests
 {
     internal enum BookRecordType
     {

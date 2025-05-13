@@ -1,8 +1,7 @@
-﻿using LibraryData.Objects;
-
-namespace LibraryData
+﻿namespace LibraryLogicTests
 {
-     internal class InMemoryDataStorage : IDataStorage
+    using LibraryData;
+    internal class InMemoryDataStorage : IDataStorage
     {
         internal List<Book> Books { get; } = new();
         internal List<Customer> Customers { get; } = new();
