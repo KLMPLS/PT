@@ -108,5 +108,25 @@ namespace LibraryData
             _context.InventoryStates.DeleteOnSubmit(state);
             _context.SubmitChanges();
         }
+
+        public override List<Customer> getAllCustomers()
+        {
+            return _context.Customers.ToList();
+        }
+
+        public override List<Book> getAllBooks()
+        {
+            return _context.Books.ToList();
+        }
+
+        public override List<BookRecord> getAllBooksRecord()
+        {
+            return _context.BookRecords.ToList();
+        }
+
+        public override List<InventoryState> getAllInventoryStates()
+        {
+            return _context.InventoryStates.ToList();
+        }
     }
 }
