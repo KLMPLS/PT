@@ -1,12 +1,12 @@
-﻿namespace LibraryData.Objects
+﻿namespace LibraryLogicTests
 {
-    internal class Customer
+    internal class FakeCustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public Customer(int id, string name, string email)
+        public FakeCustomer(int id, string name, string email)
         {
             Id = id;
             Name = name;

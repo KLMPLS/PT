@@ -5,9 +5,9 @@ namespace LibraryData.API
     public interface IBookRecord
     {
         public int Id { get; set; }
-        public ICustomer Customer { get; set; }
-        public IBook Book { get; set; }
-        public IRecordType Type { get; set; }
+        public int customer_id{ get; set; }
+        public int book_id { get; set; }
+        public string type { get; set; }
         public DateTime Date { get; set; }
     }
 }

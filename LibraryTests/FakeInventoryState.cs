@@ -1,11 +1,11 @@
 ﻿namespace LibraryLogicTests
 {
-    internal class InventoryState
+    internal class FakeInventoryState
     {
-        public Book Book { get; set; }
+        public FakeBook Book { get; set; }
         public int AvailableCopies { get; set; }
 
-        public InventoryState(Book book,int av_copies)
+        public FakeInventoryState(FakeBook book,int av_copies)
         {
             Book = book;
             AvailableCopies = av_copies;

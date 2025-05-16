@@ -1,22 +1,19 @@
-﻿using LibraryData.Objects.Task1data;
-using LibraryData.API;
-using LibraryData.Objects;
-
-namespace LibraryData
+﻿namespace LibraryLogicTests
 {
-     internal class InMemoryDataStorage : IDataStorage
+    using LibraryData;
+    internal class FakeInMemoryDataStorage : IDataStorage
     {
-        internal List<Book> Books { get; } = new();
-        internal List<Customer> Customers { get; } = new();
-        internal List<BookRecord> Records { get; } = new();
-        internal List<InventoryState> States { get; } = new();
-        public override void AddBook(string title, string author, string genre) { 
-            Book book = new Book(Books.Count + 1, title, author, genre);
+        internal List<FakeBook> Books { get; } = new();
+        internal List<FakeCustomer> Customers { get; } = new();
+        internal List<FakeBookRecord> Records { get; } = new();
+        internal List<FakeInventoryState> States { get; } = new();
+        public override void AddBook(string title, string author, string genre) {
+            FakeBook book = new FakeBook(Books.Count + 1, title, author, genre);
             Books.Add(book);
         }
         public override void AddCustomer(string name, string email)
         {
-            Customers.Add(new Customer(Customers.Count + 1, name, email));
+            Customers.Add(new FakeCustomer(Customers.Count + 1, name, email));
         }
         public override void AddRecord(int customerId, int bookId, int typeid)
         {
@@ -24,7 +21,7 @@ namespace LibraryData
             var book = FindBook(bookId);
             if (customer != null && book != null && ((AmmoutLeft(bookId) != 0) || (typeid == 2)))
             {
-                Records.Add(new BookRecord(Records.Count + 1, customer, book, GetBookRecordType(typeid)));
+                Records.Add(new FakeBookRecord(Records.Count + 1, customer, book, GetBookRecordType(typeid)));
             }
         }
         public override void AddInventoryState(int bookId, int availableCopies)
@@ -32,7 +29,7 @@ namespace LibraryData
             var book = FindBook(bookId);
             if (book != null)
             {
-                States.Add(new InventoryState(book, availableCopies));
+                States.Add(new FakeInventoryState(book, availableCopies));
             }
            
         }
@@ -44,24 +41,24 @@ namespace LibraryData
                 state.AvailableCopies += change;
             }
         }
-        BookRecordType GetBookRecordType(int typeid)
+        FakeBookRecordType GetBookRecordType(int typeid)
         {
             return typeid switch
             {
-                1 => BookRecordType.Borrowed,
-                2 => BookRecordType.Returned,
+                1 => FakeBookRecordType.Borrowed,
+                2 => FakeBookRecordType.Returned,
                 _ => throw new ArgumentOutOfRangeException(nameof(typeid), "Invalid book record type")
             };
         }
-        InventoryState FindInventoryState(int bookId)
+        FakeInventoryState FindInventoryState(int bookId)
         {
             return States.FirstOrDefault(s => s.Book.Id == bookId);
         }
-        IBook FindBook(int id)
+        FakeBook FindBook(int id)
         {
             return Books.FirstOrDefault(b => b.Id == id);
         }
-        Customer FindCustomer(int id)
+        FakeCustomer FindCustomer(int id)
         {
             return Customers.FirstOrDefault(c => c.Id == id);
         }

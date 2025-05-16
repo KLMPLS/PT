@@ -1,13 +1,13 @@
 ﻿namespace LibraryLogicTests
 {
-    internal class BookRecord
+    internal class FakeBookRecord
     {
         public int Id { get; set; }
-        public Customer Customer { get; set; }
-        public Book Book { get; set; }
-        public BookRecordType Type { get; set; }
+        public FakeCustomer Customer { get; set; }
+        public FakeBook Book { get; set; }
+        public FakeBookRecordType Type { get; set; }
         public DateTime Date { get; set; }
-        public BookRecord(int id, Customer customer, Book book, BookRecordType type)
+        public FakeBookRecord(int id, FakeCustomer customer, FakeBook book, FakeBookRecordType type)
         {
             Id = id;
             Customer = customer;

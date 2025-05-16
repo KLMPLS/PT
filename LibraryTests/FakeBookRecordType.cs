@@ -1,6 +1,6 @@
 ﻿namespace LibraryLogicTests
 {
-    internal enum BookRecordType
+    internal enum FakeBookRecordType
     {
         Borrowed,
         Returned

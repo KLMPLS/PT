@@ -6,9 +6,9 @@ namespace LibraryLogicTests
     [TestClass]
     public class LibraryServiceTests
     {
-        internal InMemoryDataStorage init()
+        internal FakeInMemoryDataStorage init()
         {
-            InMemoryDataStorage dataStorage = new InMemoryDataStorage();
+            FakeInMemoryDataStorage dataStorage = new FakeInMemoryDataStorage();
             dataStorage.AddBook("Test Book", "Test Author", "Test Genre");
             dataStorage.AddInventoryState(1, 5);
             dataStorage.AddCustomer("Kutin", "nullKutin@email.com");
@@ -18,33 +18,33 @@ namespace LibraryLogicTests
         [TestMethod()]
         public void BorrowBookTest()
         {
-            InMemoryDataStorage dataStorage = init();
+            FakeInMemoryDataStorage dataStorage = init();
             LibraryService libraryService = new(dataStorage);
 
             libraryService.BorrowBook(1, 1);
 
             Assert.AreEqual(4, dataStorage.States[0].AvailableCopies);
             Assert.AreEqual(1, dataStorage.Records.Count);
-            Assert.AreEqual(BookRecordType.Borrowed, dataStorage.Records[0].Type);
+            Assert.AreEqual(FakeBookRecordType.Borrowed, dataStorage.Records[0].Type);
         }
 
         [TestMethod()]
         public void ReturnBookTest()
         {
-            InMemoryDataStorage dataStorage = init();
+            FakeInMemoryDataStorage dataStorage = init();
             LibraryService libraryService = new(dataStorage);
 
             libraryService.ReturnBook(1, 1);
 
             Assert.AreEqual(6, dataStorage.States[0].AvailableCopies);
             Assert.AreEqual(1, dataStorage.Records.Count);
-            Assert.AreEqual(BookRecordType.Returned, dataStorage.Records[0].Type);
+            Assert.AreEqual(FakeBookRecordType.Returned, dataStorage.Records[0].Type);
         }
 
         [TestMethod()]
         public void AddtoInventoryTest()
         {
-            InMemoryDataStorage dataStorage = init();
+            FakeInMemoryDataStorage dataStorage = init();
             LibraryService libraryService = new(dataStorage);
 
             libraryService.AddtoInventory(1, 3);
@@ -55,7 +55,7 @@ namespace LibraryLogicTests
         [TestMethod()]
         public void RemoveFromInventoryTest()
         {
-            InMemoryDataStorage dataStorage = init();
+            FakeInMemoryDataStorage dataStorage = init();
             LibraryService libraryService = new(dataStorage);
 
             libraryService.RemoveFromInventory(1, 2);
