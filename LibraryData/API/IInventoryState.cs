@@ -1,6 +1,6 @@
-﻿namespace LibraryData.Objects
+﻿namespace LibraryData.API
 {
-    internal interface IInventoryState
+    public interface IInventoryState
     {
         public IBook Book { get; set; }
         public int AvailableCopies { get; set; }

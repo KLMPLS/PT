@@ -1,6 +1,6 @@
-﻿namespace LibraryData.Objects
+﻿namespace LibraryData.API
 {
-    internal interface ICustomer
+    public interface ICustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }

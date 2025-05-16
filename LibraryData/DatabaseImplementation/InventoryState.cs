@@ -1,4 +1,4 @@
-﻿namespace LibraryData.Objects.DatabaseData
+﻿namespace LibraryData.Objects
 {
     internal class InventoryState
     {

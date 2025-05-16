@@ -1,6 +1,7 @@
 ﻿namespace LibraryLogic
 {
-    using LibraryData;
+    using LibraryData.API;
+
     public class LibraryService : ILibraryService
     {
         DataRep dataRep;

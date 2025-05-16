@@ -1,6 +1,6 @@
-﻿namespace LibraryData.Objects
+﻿namespace LibraryData.API
 {
-    internal interface IBook
+    public interface IBook
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -1,4 +1,5 @@
-﻿namespace LibraryData.Objects.Task1data
+﻿using LibraryData.API;
+namespace LibraryData.Objects
 {
     internal class Book : IBook
     {

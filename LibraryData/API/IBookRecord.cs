@@ -1,11 +1,13 @@
-﻿namespace LibraryData.Objects
+﻿using LibraryData.Objects;
+
+namespace LibraryData.API
 {
-    internal interface IBookRecord
+    public interface IBookRecord
     {
         public int Id { get; set; }
         public ICustomer Customer { get; set; }
         public IBook Book { get; set; }
-        public BookRecordType Type { get; set; }
+        public IRecordType Type { get; set; }
         public DateTime Date { get; set; }
     }
 }

@@ -1,6 +1,7 @@
-﻿namespace LibraryData.Objects.DatabaseData
+﻿using LibraryData.API;
+namespace LibraryData.Objects
 {
-    internal class BookRecord
+    internal class BookRecord : IBookRecord
     {
         public int Id { get; set; }
         public Customer Customer { get; set; }

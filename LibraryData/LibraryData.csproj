@@ -10,4 +10,25 @@
 			<_Parameter1>LibraryDataTests</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+	  <PackageReference Include="Mindbox.Data.Linq" Version="10.7.2" />
+	  <PackageReference Include="System.Linq" Version="4.3.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="DataClasses1.dbml">
+	    <Generator>MSLinqToSQLGenerator</Generator>
+	    <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Service Include="{3259aa49-8aa1-44d3-9025-a0b520596a8c}" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="DataClasses1.designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>DataClasses1.dbml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
 </Project>

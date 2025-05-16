@@ -1,6 +1,7 @@
 ﻿namespace LibraryLogicTests
 {
-    using LibraryData;
+    using LibraryData.API;
+
     internal class InMemoryDataStorage : IDataStorage
     {
         internal List<Book> Books { get; } = new();
