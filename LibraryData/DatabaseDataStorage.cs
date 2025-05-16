@@ -3,7 +3,6 @@ using LibraryData.API;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-
 namespace LibraryData
 {
      internal class DatabaseDataStorage : IDataStorage

@@ -2,7 +2,7 @@
 {
     public interface IInventoryState
     {
-        public IBook Book { get; set; }
+        public int book_id { get; set; }
         public int AvailableCopies { get; set; }
     }
 }

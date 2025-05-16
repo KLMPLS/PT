@@ -1,6 +1,8 @@
-﻿namespace LibraryData.Objects
+﻿using LibraryData.API;
+
+namespace LibraryData.Objects
 {
-    internal class CustomerO
+    internal class CustomerO : ICustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }

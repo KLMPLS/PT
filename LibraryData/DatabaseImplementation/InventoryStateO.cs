@@ -1,13 +1,15 @@
-﻿namespace LibraryData.Objects
+﻿using LibraryData.API;
+
+namespace LibraryData.Objects
 {
-    internal class InventoryStateO
+    internal class InventoryStateO : IInventoryState
     {
-        public BookO Book { get; set; }
+        public int book_id { get; set; }
         public int AvailableCopies { get; set; }
 
-        public InventoryStateO(BookO book,int av_copies)
+        public InventoryStateO(int id,int av_copies)
         {
-            Book = book;
+            book_id = id;
             AvailableCopies = av_copies;
         }
     }

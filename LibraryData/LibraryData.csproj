@@ -16,19 +16,19 @@
 	  <PackageReference Include="System.Linq" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="DataClasses1.dbml">
+	  <None Update="Library.dbml">
 	    <Generator>MSLinqToSQLGenerator</Generator>
-	    <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+	    <LastGenOutput>Library.designer.cs</LastGenOutput>
 	  </None>
 	</ItemGroup>
 	<ItemGroup>
 	  <Service Include="{3259aa49-8aa1-44d3-9025-a0b520596a8c}" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="DataClasses1.designer.cs">
+	  <Compile Update="Library.designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DataClasses1.dbml</DependentUpon>
+	    <DependentUpon>Library.dbml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 </Project>
