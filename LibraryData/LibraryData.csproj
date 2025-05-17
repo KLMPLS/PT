@@ -16,12 +16,6 @@
 	  <PackageReference Include="System.Linq" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="Library.dbml">
-	    <Generator>MSLinqToSQLGenerator</Generator>
-	    <LastGenOutput>Library.designer.cs</LastGenOutput>
-	  </None>
-	</ItemGroup>
-	<ItemGroup>
 	  <Service Include="{3259aa49-8aa1-44d3-9025-a0b520596a8c}" />
 	</ItemGroup>
 	<ItemGroup>
@@ -30,5 +24,11 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Library.dbml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Library.dbml">
+	    <Generator>MSLinqToSQLGenerator</Generator>
+	    <LastGenOutput>Library.designer.cs</LastGenOutput>
+	  </None>
 	</ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ namespace PresentationLayer.View
     /// <summary>
     /// Interaction logic for BookRecordView.xaml
     /// </summary>
-    public partial class BookRecordView : Window
+    public partial class BookRecordView : UserControl
     {
         public BookRecordView()
         {

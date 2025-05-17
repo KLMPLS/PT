@@ -39,6 +39,9 @@ namespace LibraryData
     partial void InsertCustomer(Customer instance);
     partial void UpdateCustomer(Customer instance);
     partial void DeleteCustomer(Customer instance);
+    partial void InsertInventoryState(InventoryState instance);
+    partial void UpdateInventoryState(InventoryState instance);
+    partial void DeleteInventoryState(InventoryState instance);
     #endregion
 		
 		public LibraryDataContext(string connection) : 
@@ -114,6 +117,8 @@ namespace LibraryData
 		
 		private EntitySet<BookRecord> _BookRecords;
 		
+		private EntityRef<InventoryState> _InventoryState;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -131,10 +136,11 @@ namespace LibraryData
 		public Book()
 		{
 			this._BookRecords = new EntitySet<BookRecord>(new Action<BookRecord>(this.attach_BookRecords), new Action<BookRecord>(this.detach_BookRecords));
+			this._InventoryState = default(EntityRef<InventoryState>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -227,6 +233,35 @@ namespace LibraryData
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_InventoryState", Storage="_InventoryState", ThisKey="Id", OtherKey="Book_id", IsUnique=true, IsForeignKey=false)]
+		public InventoryState InventoryState
+		{
+			get
+			{
+				return this._InventoryState.Entity;
+			}
+			set
+			{
+				InventoryState previousValue = this._InventoryState.Entity;
+				if (((previousValue != value) 
+							|| (this._InventoryState.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._InventoryState.Entity = null;
+						previousValue.Book = null;
+					}
+					this._InventoryState.Entity = value;
+					if ((value != null))
+					{
+						value.Book = this;
+					}
+					this.SendPropertyChanged("InventoryState");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -303,7 +338,7 @@ namespace LibraryData
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -532,7 +567,7 @@ namespace LibraryData
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -639,18 +674,34 @@ namespace LibraryData
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.InventoryState")]
-	public partial class InventoryState
+	public partial class InventoryState : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _Book_id;
 		
 		private System.Nullable<int> _Available;
 		
+		private EntityRef<Book> _Book;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBook_idChanging(int value);
+    partial void OnBook_idChanged();
+    partial void OnAvailableChanging(System.Nullable<int> value);
+    partial void OnAvailableChanged();
+    #endregion
+		
 		public InventoryState()
 		{
+			this._Book = default(EntityRef<Book>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_id", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int Book_id
 		{
 			get
@@ -661,7 +712,15 @@ namespace LibraryData
 			{
 				if ((this._Book_id != value))
 				{
+					if (this._Book.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBook_idChanging(value);
+					this.SendPropertyChanging();
 					this._Book_id = value;
+					this.SendPropertyChanged("Book_id");
+					this.OnBook_idChanged();
 				}
 			}
 		}
@@ -677,8 +736,66 @@ namespace LibraryData
 			{
 				if ((this._Available != value))
 				{
+					this.OnAvailableChanging(value);
+					this.SendPropertyChanging();
 					this._Available = value;
+					this.SendPropertyChanged("Available");
+					this.OnAvailableChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_InventoryState", Storage="_Book", ThisKey="Book_id", OtherKey="Id", IsForeignKey=true)]
+		public Book Book
+		{
+			get
+			{
+				return this._Book.Entity;
+			}
+			set
+			{
+				Book previousValue = this._Book.Entity;
+				if (((previousValue != value) 
+							|| (this._Book.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Book.Entity = null;
+						previousValue.InventoryState = null;
+					}
+					this._Book.Entity = value;
+					if ((value != null))
+					{
+						value.InventoryState = this;
+						this._Book_id = value.Id;
+					}
+					else
+					{
+						this._Book_id = default(int);
+					}
+					this.SendPropertyChanged("Book");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
