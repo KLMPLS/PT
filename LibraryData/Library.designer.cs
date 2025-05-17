@@ -23,7 +23,7 @@ namespace LibraryData
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Database1")]
-	public partial class LibraryDataContext : System.Data.Linq.DataContext
+	internal partial class LibraryDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -49,8 +49,13 @@ namespace LibraryData
 		{
 			OnCreated();
 		}
-		
-		public LibraryDataContext(System.Data.IDbConnection connection) : 
+		public LibraryDataContext():
+				base("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\GniewkoPC\\Desktop\\PT\\PT\\LibraryData\\Database1.mdf;Integrated Security=True", mappingSource)
+		{
+			OnCreated();
+        }
+
+        public LibraryDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();

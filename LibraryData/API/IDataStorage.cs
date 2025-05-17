@@ -21,5 +21,10 @@
         public abstract List<IInventoryState> getAllInventoryStates();
 
         public abstract void ClearAllBooks();
+
+        public static IDataStorage GenerateStorage()
+        {
+            return new DatabaseDataStorage();
+        }
     }
 }

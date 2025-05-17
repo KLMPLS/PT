@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace PresentationLayer
+namespace LibraryApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

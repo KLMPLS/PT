@@ -4,12 +4,16 @@ using LibraryService.Implementations;
 namespace LibraryService
 {
 
-    public class LibraryServiceImp : ILibraryService
+    internal class LibraryServiceImp : ILibraryService
     {
         IDataStorage dataStorage;
         public LibraryServiceImp(IDataStorage dataStorage)
         {
             this.dataStorage = dataStorage;
+        }
+        public LibraryServiceImp()
+        {
+            this.dataStorage = IDataStorage.GenerateStorage();
         }
         public override void AddBook(string title, string author, string genre)
         {
@@ -43,15 +47,13 @@ namespace LibraryService
         {
             dataStorage.RemoveInventoryState(bookId);
         }
-        public override void BorrowBook(int bookId, int customerId, int change, DateTime a)
+        public override void BorrowBook(int bookId, int change)
         {
             dataStorage.UpdateInventoryState(bookId, -change);
-            dataStorage.AddRecord(customerId, bookId, "Borrowed", a);
         }
-        public override void ReturnBook(int bookId, int customerId, int change, DateTime a)
+        public override void ReturnBook(int bookId, int change)
         {
             dataStorage.UpdateInventoryState(bookId, change);
-            dataStorage.AddRecord(customerId, bookId, "Returned", a);
         }
         public override List<IServiceCustomer> getAllCustomers()
         {

@@ -5,13 +5,16 @@ using System.Net;
 
 namespace LibraryData
 {
-     public class DatabaseDataStorage : IDataStorage
+     internal class DatabaseDataStorage : IDataStorage
     {
         private LibraryDataContext _context;
 
         public DatabaseDataStorage (string connection) {
                 _context = new LibraryDataContext (connection);
             }
+        public DatabaseDataStorage () {
+                _context = new LibraryDataContext ();
+        }
 
         public override void AddBook(string title, string author, string genre) {
             Book book = new Book()

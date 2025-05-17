@@ -2,6 +2,7 @@
 using PresentationLayer.Model;
 using PresentationLayer.ViewModel;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 namespace PresentationLayer.ViewModel
 {
@@ -20,7 +21,13 @@ namespace PresentationLayer.ViewModel
         public InventoryStateModel SelectedInventoryState
         {
             get => _selectedInventoryState;
-            set => SetProperty(ref _selectedInventoryState, value);
+            set             {
+                if (SetProperty(ref _selectedInventoryState, value))
+                {
+                    ((RelayCommand)BorrowCommand).RaiseCanExecuteChanged();
+                    ((RelayCommand)ReturnCommand).RaiseCanExecuteChanged();
+                }
+            }
         }
 
         private string _newInventoryStateBookId;
@@ -58,6 +65,8 @@ namespace PresentationLayer.ViewModel
 
         public ICommand AddInventoryStateCommand { get; }
         public ICommand DeleteInventoryStateCommand { get; }
+        public ICommand BorrowCommand { get; }
+        public ICommand ReturnCommand { get; }
 
         public InventoryStatesViewModel(ILibraryService service)
         {
@@ -66,8 +75,19 @@ namespace PresentationLayer.ViewModel
 
             AddInventoryStateCommand = new RelayCommand(AddInventoryState, CanAddInventoryState);
             DeleteInventoryStateCommand = new RelayCommand(DeleteInventoryState, CanDeleteInventoryState);
+            BorrowCommand = new RelayCommand(BorrowCommandDo, () => SelectedInventoryState != null);
+            ReturnCommand = new RelayCommand(ReturnCommandDo, () => SelectedInventoryState != null);
         }
-
+        private void BorrowCommandDo()
+        {
+            _service.BorrowBook(SelectedInventoryState.Id,1);
+            LoadInventoryStates();
+        }
+        private void ReturnCommandDo()
+        {
+            _service.ReturnBook(SelectedInventoryState.Id,1);
+            LoadInventoryStates();
+        }
         private void LoadInventoryStates()
         {
             var serviceInventoryStates = _service.getAllInventoryStates();

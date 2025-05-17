@@ -11,48 +11,48 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- For input form -->
             <RowDefinition Height="*"/>
-            <!-- For list -->
         </Grid.RowDefinitions>
 
-        <!-- Input form -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Left" >
-           
-            <TextBox Width="150" Margin="5" 
-             Text="{Binding NewInventoryStateBookId, UpdateSourceTrigger=PropertyChanged}" 
-       />
+        <!-- Top control section -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <TextBox Width="150" Margin="5" 
-                 Text="{Binding NewInventoryStateAvailable, UpdateSourceTrigger=PropertyChanged}" 
-                 />
+            <!-- Left section: Add and Delete -->
+            <StackPanel Orientation="Vertical" Grid.Column="0" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBox Width="150" Margin="5" Text="{Binding NewInventoryStateBookId}" />
+                    <TextBox Width="150" Margin="5" Text="{Binding NewInventoryStateAvailable}" />
+                    <Button Content="Add InventoryState" Margin="5" Command="{Binding AddInventoryStateCommand}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="100" Margin="5" Text="{Binding DeleteInventoryStateId}" />
+                    <Button Content="Delete InventoryState" Margin="5" Command="{Binding DeleteInventoryStateCommand}" />
+                </StackPanel>
+            </StackPanel>
 
-            <Button Content="Add InventoryState" Margin="10,0" 
-                Command="{Binding AddInventoryStateCommand}" />
-        </StackPanel>
+            <!-- Right section: Borrow / Return -->
+            <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="20,0,0,0">
+                <TextBlock Text="Selected ID:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox Width="100" Text="{Binding SelectedInventoryState.Id}" IsReadOnly="True" Margin="0,0,0,10"/>
+                <Button Content="Borrow" Width="100" Margin="0,0,0,5" Command="{Binding BorrowCommand}" />
+                <Button Content="Return" Width="100" Command="{Binding ReturnCommand}" />
+            </StackPanel>
+        </Grid>
 
-        <!-- Delete InventoryState section -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,40,0,10" VerticalAlignment="Top" HorizontalAlignment="Left">
-
-            <TextBox Width="100" Margin="5" 
-                 Text="{Binding DeleteInventoryStateId, UpdateSourceTrigger=PropertyChanged}" 
-                 />
-
-            <Button Content="Delete InventoryState" Margin="10,0"
-                Command="{Binding DeleteInventoryStateCommand}" />
-        </StackPanel>
-
-        <!-- InventoryStates list -->
+        <!-- List of inventory states -->
         <GroupBox Header="InventoryStates" Grid.Row="1">
             <ListView ItemsSource="{Binding InventoryStates}" SelectedItem="{Binding SelectedInventoryState}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
                         <GridViewColumn Header="Available" DisplayMemberBinding="{Binding Available}" Width="200"/>
-                   </GridView>
+                    </GridView>
                 </ListView.View>
             </ListView>
         </GroupBox>
     </Grid>
-
 </UserControl>
