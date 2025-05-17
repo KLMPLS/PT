@@ -14,8 +14,8 @@
         public abstract void RemoveRecord(int id);
         public abstract void AddInventoryState(int bookId, int availableCopies);
         public abstract void RemoveInventoryState(int bookId);
-        public abstract void BorrowBook(int bookId, int customerId, int change);
-        public abstract void ReturnBook(int bookId, int customerId, int change);
+        public abstract void BorrowBook(int bookId, int customerId, int change, DateTime a);
+        public abstract void ReturnBook(int bookId, int customerId, int change, DateTime a);
 
         public abstract List<IServiceCustomer> getAllCustomers();
         public abstract List<IServiceBook> getAllBooks();

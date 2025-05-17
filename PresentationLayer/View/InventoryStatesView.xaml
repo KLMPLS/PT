@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="PresentationLayer.View.InventoryStatesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- For input form -->
+            <RowDefinition Height="*"/>
+            <!-- For list -->
+        </Grid.RowDefinitions>
+
+        <!-- Input form -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Left" >
+           
+            <TextBox Width="150" Margin="5" 
+             Text="{Binding NewInventoryStateBookId, UpdateSourceTrigger=PropertyChanged}" 
+       />
+
+            <TextBox Width="150" Margin="5" 
+                 Text="{Binding NewInventoryStateAvailable, UpdateSourceTrigger=PropertyChanged}" 
+                 />
+
+            <Button Content="Add InventoryState" Margin="10,0" 
+                Command="{Binding AddInventoryStateCommand}" />
+        </StackPanel>
+
+        <!-- Delete InventoryState section -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,40,0,10" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+            <TextBox Width="100" Margin="5" 
+                 Text="{Binding DeleteInventoryStateId, UpdateSourceTrigger=PropertyChanged}" 
+                 />
+
+            <Button Content="Delete InventoryState" Margin="10,0"
+                Command="{Binding DeleteInventoryStateCommand}" />
+        </StackPanel>
+
+        <!-- InventoryStates list -->
+        <GroupBox Header="InventoryStates" Grid.Row="1">
+            <ListView ItemsSource="{Binding InventoryStates}" SelectedItem="{Binding SelectedInventoryState}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                        <GridViewColumn Header="Available" DisplayMemberBinding="{Binding Available}" Width="200"/>
+                   </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

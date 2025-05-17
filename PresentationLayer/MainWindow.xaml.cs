@@ -10,8 +10,8 @@ namespace PresentationLayer
         public MainWindow()
         {
             InitializeComponent();
-            ILibraryService service = new LibraryServiceImp(new DatabaseDataStorage("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = C:\\Users\\GniewkoPC\\Desktop\\PT\\PT\\LibraryData\\Database1.mdf; Integrated Security = True"));
-            DataContext = new BookRecordsViewModel(service);
+            ILibraryService service = new LibraryServiceImp(new DatabaseDataStorage("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\korne\\Source\\Repos\\PT\\LibraryData\\Database1.mdf;Integrated Security=True"));
+            DataContext = new InventoryStatesViewModel(service);
             //service.AddBook("Test Book", "Test Author", "Test Genre");
             //service.AddBook("Test Book2", "Test Author2", "Test Genre2");
             //service.ClearAll();

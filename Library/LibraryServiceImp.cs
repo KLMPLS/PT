@@ -43,15 +43,15 @@ namespace LibraryService
         {
             dataStorage.RemoveInventoryState(bookId);
         }
-        public override void BorrowBook(int bookId, int customerId, int change)
+        public override void BorrowBook(int bookId, int customerId, int change, DateTime a)
         {
             dataStorage.UpdateInventoryState(bookId, -change);
-            dataStorage.AddRecord(customerId, bookId, "Borrowed");
+            dataStorage.AddRecord(customerId, bookId, "Borrowed", a);
         }
-        public override void ReturnBook(int bookId, int customerId, int change)
+        public override void ReturnBook(int bookId, int customerId, int change, DateTime a)
         {
             dataStorage.UpdateInventoryState(bookId, change);
-            dataStorage.AddRecord(customerId, bookId, "Returned");
+            dataStorage.AddRecord(customerId, bookId, "Returned", a);
         }
         public override List<IServiceCustomer> getAllCustomers()
         {
