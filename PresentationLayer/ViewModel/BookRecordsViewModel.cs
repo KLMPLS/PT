@@ -21,7 +21,27 @@ namespace PresentationLayer.ViewModel
         public BookRecordModel SelectedRecord
         {
             get => _selectedRecord;
-            set => SetProperty(ref _selectedRecord, value);
+            //set => SetProperty(ref _selectedRecord, value);
+            set
+            {
+                if (SetProperty(ref _selectedRecord, value))
+                {
+                    if (_selectedRecord != null)
+                    {
+                        NewCustomerId = _selectedRecord.CustomerId.ToString();
+                        NewBookId = _selectedRecord.BookId.ToString();
+                        NewType = _selectedRecord.Type;
+                        NewDate = _selectedRecord.Date;
+                    }
+                    else
+                    {
+                        NewCustomerId = "";
+                        NewBookId = "";
+                        NewType = "";
+                       // NewDate = "";
+                    }
+                }
+            }
         }
 
         // Properties for adding a new record

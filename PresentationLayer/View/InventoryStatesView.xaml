@@ -18,10 +18,10 @@
 
         <!-- Input form -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Left" >
-           
+
             <TextBox Width="150" Margin="5" 
-             Text="{Binding NewInventoryStateBookId, UpdateSourceTrigger=PropertyChanged}" 
-       />
+                 Text="{Binding NewInventoryStateBookId, UpdateSourceTrigger=PropertyChanged}" 
+           />
 
             <TextBox Width="150" Margin="5" 
                  Text="{Binding NewInventoryStateAvailable, UpdateSourceTrigger=PropertyChanged}" 
@@ -45,12 +45,13 @@
         <!-- InventoryStates list -->
         <GroupBox Header="InventoryStates" Grid.Row="1">
             <ListView ItemsSource="{Binding InventoryStates}" SelectedItem="{Binding SelectedInventoryState}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                        <GridViewColumn Header="Available" DisplayMemberBinding="{Binding Available}" Width="200"/>
-                   </GridView>
-                </ListView.View>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding Id}" Width="50"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </GroupBox>
     </Grid>

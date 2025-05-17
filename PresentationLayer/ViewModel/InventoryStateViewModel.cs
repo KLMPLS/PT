@@ -20,7 +20,22 @@ namespace PresentationLayer.ViewModel
         public InventoryStateModel SelectedInventoryState
         {
             get => _selectedInventoryState;
-            set => SetProperty(ref _selectedInventoryState, value);
+            set
+            {
+                if (SetProperty(ref _selectedInventoryState, value))
+                {
+                    if (_selectedInventoryState != null)
+                    {
+                        NewInventoryStateBookId = _selectedInventoryState.Id.ToString();
+                        NewInventoryStateAvailable = _selectedInventoryState.Available.ToString();
+                    }
+                    else
+                    {
+                        NewInventoryStateBookId = "";
+                        NewInventoryStateAvailable = "";
+                    }
+                }
+            }
         }
 
         private string _newInventoryStateBookId;

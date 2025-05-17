@@ -49,16 +49,15 @@
         <!-- Books list -->
         <GroupBox Header="Books" Grid.Row="1">
             <ListView ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                        <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="200"/>
-                        <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}" Width="150"/>
-                        <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding Genre}" Width="100"/>
-                    </GridView>
-                </ListView.View>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding Id}" Width="50"/>
+                            <TextBlock Text="{Binding Title}" Width="200" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </GroupBox>
     </Grid>
-
 </UserControl>
