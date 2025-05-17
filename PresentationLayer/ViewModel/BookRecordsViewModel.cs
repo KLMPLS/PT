@@ -29,21 +29,33 @@ namespace PresentationLayer.ViewModel
         public string NewCustomerId
         {
             get => _newCustomerId;
-            set => SetProperty(ref _newCustomerId, value);
+            set
+            { 
+                if (SetProperty(ref _newCustomerId, value))
+                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged(); ; 
+            }
         }
 
         private string _newBookId;
         public string NewBookId
         {
             get => _newBookId;
-            set => SetProperty(ref _newBookId, value);
+            set
+            {
+                if (SetProperty(ref _newBookId, value))
+                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged(); ;
+            }
         }
 
         private string _newType;
         public string NewType
         {
             get => _newType;
-            set => SetProperty(ref _newType, value);
+            set
+            {
+                if (SetProperty(ref _newType, value))
+                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged(); ;
+            }
         }
 
         private DateTime _newDate = DateTime.Now;
@@ -58,7 +70,11 @@ namespace PresentationLayer.ViewModel
         public string DeleteRecordId
         {
             get => _deleteRecordId;
-            set => SetProperty(ref _deleteRecordId, value);
+            set
+            {
+                if (SetProperty(ref _deleteRecordId, value))
+                    ((RelayCommand)DeleteCommand).RaiseCanExecuteChanged(); ;
+            }
         }
 
         // Commands
@@ -98,8 +114,7 @@ namespace PresentationLayer.ViewModel
             return
                 int.TryParse(NewCustomerId, out _) &&
                 int.TryParse(NewBookId, out _) &&
-                !string.IsNullOrWhiteSpace(NewType) &&
-                NewDate != default;
+                !string.IsNullOrWhiteSpace(NewType);
         }
 
         private void AddRecord()

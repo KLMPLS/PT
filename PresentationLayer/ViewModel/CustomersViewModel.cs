@@ -3,103 +3,105 @@ using PresentationLayer.Model;
 using PresentationLayer.ViewModel;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-
-public class CustomersViewModel : ViewModelBase
+namespace PresentationLayer.ViewModel
 {
-    private readonly ILibraryService _service;
-
-    private ObservableCollection<CustomerModel> _customers;
-    public ObservableCollection<CustomerModel> Customers
+    public class CustomersViewModel : ViewModelBase
     {
-        get => _customers;
-        set => SetProperty(ref _customers, value);
-    }
+        private readonly ILibraryService _service;
 
-    private CustomerModel _selectedCustomer;
-    public CustomerModel SelectedCustomer
-    {
-        get => _selectedCustomer;
-        set => SetProperty(ref _selectedCustomer, value);
-    }
-
-    private string _newCustomerName;
-    public string NewCustomerName
-    {
-        get => _newCustomerName;
-        set
+        private ObservableCollection<CustomerModel> _customers;
+        public ObservableCollection<CustomerModel> Customers
         {
-            SetProperty(ref _newCustomerName, value);
-            ((RelayCommand)AddCustomerCommand).RaiseCanExecuteChanged();
+            get => _customers;
+            set => SetProperty(ref _customers, value);
         }
-    }
 
-    private string _newCustomerEmail;
-    public string NewCustomerEmail
-    {
-        get => _newCustomerEmail;
-        set
+        private CustomerModel _selectedCustomer;
+        public CustomerModel SelectedCustomer
         {
-            SetProperty(ref _newCustomerEmail, value);
-            ((RelayCommand)AddCustomerCommand).RaiseCanExecuteChanged();
+            get => _selectedCustomer;
+            set => SetProperty(ref _selectedCustomer, value);
         }
-    }
 
-    private string _deleteCustomerId;
-    public string DeleteCustomerId
-    {
-        get => _deleteCustomerId;
-        set
+        private string _newCustomerName;
+        public string NewCustomerName
         {
-            SetProperty(ref _deleteCustomerId, value);
-            ((RelayCommand)DeleteCustomerCommand).RaiseCanExecuteChanged();
-        }
-    }
-
-    public ICommand AddCustomerCommand { get; }
-    public ICommand DeleteCustomerCommand { get; }
-
-    public CustomersViewModel(ILibraryService service)
-    {
-        _service = service;
-        LoadCustomers();
-
-        AddCustomerCommand = new RelayCommand(AddCustomer, CanAddCustomer);
-        DeleteCustomerCommand = new RelayCommand(DeleteCustomer, CanDeleteCustomer);
-    }
-
-    private void LoadCustomers()
-    {
-        var serviceCustomers = _service.getAllCustomers();
-        Customers = new ObservableCollection<CustomerModel>(
-            serviceCustomers.Select(c => new CustomerModel
+            get => _newCustomerName;
+            set
             {
-                Id = c.Id,
-                Name = c.Name,
-                Email = c.Email
-            }));
-    }
+                SetProperty(ref _newCustomerName, value);
+                ((RelayCommand)AddCustomerCommand).RaiseCanExecuteChanged();
+            }
+        }
 
-    private bool CanAddCustomer() =>
-        !string.IsNullOrWhiteSpace(NewCustomerName) &&
-        !string.IsNullOrWhiteSpace(NewCustomerEmail);
-
-    private void AddCustomer()
-    {
-        _service.AddCustomer(NewCustomerName, NewCustomerEmail);
-        LoadCustomers();
-        NewCustomerName = "";
-        NewCustomerEmail = "";
-    }
-
-    private bool CanDeleteCustomer() => int.TryParse(DeleteCustomerId, out int id) && id > 0;
-
-    private void DeleteCustomer()
-    {
-        if (int.TryParse(DeleteCustomerId, out int id))
+        private string _newCustomerEmail;
+        public string NewCustomerEmail
         {
-            _service.RemoveCustomer(id);
+            get => _newCustomerEmail;
+            set
+            {
+                SetProperty(ref _newCustomerEmail, value);
+                ((RelayCommand)AddCustomerCommand).RaiseCanExecuteChanged();
+            }
+        }
+
+        private string _deleteCustomerId;
+        public string DeleteCustomerId
+        {
+            get => _deleteCustomerId;
+            set
+            {
+                SetProperty(ref _deleteCustomerId, value);
+                ((RelayCommand)DeleteCustomerCommand).RaiseCanExecuteChanged();
+            }
+        }
+
+        public ICommand AddCustomerCommand { get; }
+        public ICommand DeleteCustomerCommand { get; }
+
+        public CustomersViewModel(ILibraryService service)
+        {
+            _service = service;
             LoadCustomers();
-            DeleteCustomerId = "";
+
+            AddCustomerCommand = new RelayCommand(AddCustomer, CanAddCustomer);
+            DeleteCustomerCommand = new RelayCommand(DeleteCustomer, CanDeleteCustomer);
+        }
+
+        private void LoadCustomers()
+        {
+            var serviceCustomers = _service.getAllCustomers();
+            Customers = new ObservableCollection<CustomerModel>(
+                serviceCustomers.Select(c => new CustomerModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Email = c.Email
+                }));
+        }
+
+        private bool CanAddCustomer() =>
+            !string.IsNullOrWhiteSpace(NewCustomerName) &&
+            !string.IsNullOrWhiteSpace(NewCustomerEmail);
+
+        private void AddCustomer()
+        {
+            _service.AddCustomer(NewCustomerName, NewCustomerEmail);
+            LoadCustomers();
+            NewCustomerName = "";
+            NewCustomerEmail = "";
+        }
+
+        private bool CanDeleteCustomer() => int.TryParse(DeleteCustomerId, out int id) && id > 0;
+
+        private void DeleteCustomer()
+        {
+            if (int.TryParse(DeleteCustomerId, out int id))
+            {
+                _service.RemoveCustomer(id);
+                LoadCustomers();
+                DeleteCustomerId = "";
+            }
         }
     }
 }
