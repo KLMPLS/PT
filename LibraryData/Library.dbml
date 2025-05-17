@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database1" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database1" Class="LibraryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="dbo.Book" Member="Books">
     <Type Name="Book">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="author" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="genre" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
@@ -11,7 +11,7 @@
   </Table>
   <Table Name="dbo.BookRecord" Member="BookRecords">
     <Type Name="BookRecord">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="customer_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="book_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="type" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
@@ -22,7 +22,7 @@
   </Table>
   <Table Name="dbo.Customer" Member="Customers">
     <Type Name="Customer">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="email" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Customer_BookRecord" Member="BookRecords" ThisKey="Id" OtherKey="customer_id" Type="BookRecord" />

@@ -15,11 +15,11 @@
         public abstract IInventoryState FindInventoryState(int bookId);
         public abstract void RemoveInventoryState(int bookId);
         public abstract void UpdateInventoryState(int bookId, int change);
-        public abstract List<Customer> getAllCustomers();
-        public abstract List<Book> getAllBooks();
-        public abstract List<BookRecord> getAllBooksRecord();
-        public abstract List<InventoryState> getAllInventoryStates();
+        public abstract List<ICustomer> getAllCustomers();
+        public abstract List<IBook> getAllBooks();
+        public abstract List<IBookRecord> getAllBooksRecord();
+        public abstract List<IInventoryState> getAllInventoryStates();
 
-
+        public abstract void ClearAllBooks();
     }
 }

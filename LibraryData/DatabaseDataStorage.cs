@@ -5,7 +5,7 @@ using System.Net;
 
 namespace LibraryData
 {
-     internal class DatabaseDataStorage : IDataStorage
+     public class DatabaseDataStorage : IDataStorage
     {
         private LibraryDataContext _context;
 
@@ -39,7 +39,8 @@ namespace LibraryData
             {
                 book_id = bookId,
                 customer_id = customerId,
-                type = type
+                type = type,
+                date = DateTime.Now
             };
             _context.BookRecords.InsertOnSubmit(record);
             _context.SubmitChanges();
@@ -78,7 +79,7 @@ namespace LibraryData
         public override IBookRecord FindRecord(int id)
         {
             BookRecord state = _context.BookRecords.Single(a => a.Id==id);
-            return new BookRecordO(state.Id, state.customer_id, state.book_id, state.type);
+            return new BookRecordO(state.Id, state.customer_id, state.book_id, state.type, state.date);
         }
 
         public override void RemoveBook(int id)
@@ -109,24 +110,52 @@ namespace LibraryData
             _context.SubmitChanges();
         }
 
-        public override List<Customer> getAllCustomers()
+        public override List<ICustomer> getAllCustomers()
         {
-            return _context.Customers.ToList();
+            var customers = (from customer in _context.Customers select FindCustomer(customer.Id));
+            List<ICustomer> customerList = new List<ICustomer>();
+            foreach (var customer in customers)
+            {
+                customerList.Add(customer);
+            }
+            return customerList;
         }
 
-        public override List<Book> getAllBooks()
+        public override List<IBook> getAllBooks()
         {
-            return _context.Books.ToList();
+            var books = (from book in _context.Books select FindBook(book.Id));
+            List<IBook> bookList = new List<IBook>();
+            foreach (var book in books)
+            {
+                bookList.Add(book);
+            }
+            return bookList;
         }
 
-        public override List<BookRecord> getAllBooksRecord()
+        public override List<IBookRecord> getAllBooksRecord()
         {
-            return _context.BookRecords.ToList();
+            var records = (from record in _context.BookRecords select FindRecord(record.Id));
+            List<IBookRecord> recordList = new List<IBookRecord>();
+            foreach (var record in records)
+            {
+                recordList.Add(record);
+            }
+            return recordList;
         }
 
-        public override List<InventoryState> getAllInventoryStates()
+        public override List<IInventoryState> getAllInventoryStates()
         {
-            return _context.InventoryStates.ToList();
+            var states = (from state in _context.InventoryStates select FindInventoryState(state.Book_id));
+            List<IInventoryState> stateList = new List<IInventoryState>();
+            foreach (var state in states)
+            {
+                stateList.Add(state);
+            }
+            return stateList;
+        }
+        public override void ClearAllBooks()
+        {
+            _context.ExecuteCommand("DELETE FROM Book");
         }
     }
 }

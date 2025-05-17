@@ -14,7 +14,7 @@
         <elementListCompartment Id="191a3424-bffc-41eb-8999-f29fc6b30a86" absoluteBounds="3.0149999999999997, 4.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.75 : 4.91429768880208); (5 : 4.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.75 : 4.91429768880208); (5 : 4.91429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/Book/Book_BookRecord" />
       <nodes>
         <classShapeMoniker Id="63690e8d-e788-4b16-b490-6cad948e6642" />
@@ -27,7 +27,7 @@
         <elementListCompartment Id="68290667-24f6-409e-819b-0daec0d1f264" absoluteBounds="3.5149999999999997, 8.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.25 : 8); (4.25 : 5.89589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.25 : 8); (4.25 : 5.89589680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/Customer/Customer_BookRecord" />
       <nodes>
         <classShapeMoniker Id="6cce5a38-4327-4178-9cde-c9259844418b" />
@@ -40,7 +40,7 @@
         <elementListCompartment Id="43cc966b-4f7e-4cba-b0b0-bed9d059cd51" absoluteBounds="10.265, 7.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.7812525 : 5.70359537760417); (7.7812525 : 7.47199625651042); (10.25 : 7.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.7812525 : 5.70359537760417); (7.7812525 : 7.47199625651042); (10.25 : 7.47199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/Book/Book_InventoryState" />
       <nodes>
         <classShapeMoniker Id="63690e8d-e788-4b16-b490-6cad948e6642" />

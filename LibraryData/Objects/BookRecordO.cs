@@ -8,13 +8,13 @@ namespace LibraryData.Objects
         public int book_id{ get; set; }
         public string type { get; set; }
         public DateTime Date { get; set; }
-        public BookRecordO(int id, int customer, int book, string type)
+        public BookRecordO(int id, int customer, int book, string type, DateTime a)
         {
             Id = id;
             customer_id = customer;
             book_id = book;
             this.type = type;
-            Date = DateTime.Now;
+            Date = a;
         }
     }
 }

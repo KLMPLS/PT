@@ -1,12 +1,14 @@
-﻿namespace LibraryLogicTests
+﻿using LibraryService.API;
+
+namespace LibraryService.Implementations
 {
-    internal class FakeCustomer
+    internal class ServiceCustomer : IServiceCustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public FakeCustomer(int id, string name, string email)
+        public ServiceCustomer(int id, string name, string email)
         {
             Id = id;
             Name = name;

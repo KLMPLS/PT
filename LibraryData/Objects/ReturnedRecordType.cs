@@ -1,5 +1,5 @@
 ﻿using LibraryData.API;
-namespace LibraryData.DatabaseImplementation
+namespace LibraryData.Objects
 {
     internal class ReturnedRecordType : IRecordType
     {
