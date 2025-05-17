@@ -1,13 +1,17 @@
 ﻿using LibraryService.API;
 using PresentationLayer.Model;
+using PresentationLayer.Model.API;
 using PresentationLayer.ViewModel;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace PresentationLayer.ViewModel
 {
-    public class CustomersViewModel : ViewModelBase
+    internal class CustomersViewModel : ViewModelBase
     {
-        private readonly ILibraryService _service;
+        private readonly IModelService _service;
 
         private ObservableCollection<CustomerModel> _customers;
         public ObservableCollection<CustomerModel> Customers
@@ -74,47 +78,52 @@ namespace PresentationLayer.ViewModel
         public ICommand AddCustomerCommand { get; }
         public ICommand DeleteCustomerCommand { get; }
 
-        public CustomersViewModel(ILibraryService service)
+        public CustomersViewModel(IModelService service)
         {
             _service = service;
-            LoadCustomers();
-
-            AddCustomerCommand = new RelayCommand(AddCustomer, CanAddCustomer);
-            DeleteCustomerCommand = new RelayCommand(DeleteCustomer, CanDeleteCustomer);
+            AddCustomerCommand = new RelayCommand(async () => await AddCustomer(), CanAddCustomer);
+            DeleteCustomerCommand = new RelayCommand(async () => await DeleteCustomer(), CanDeleteCustomer);
+            _ = LoadCustomers();
         }
 
-        private void LoadCustomers()
+        private async Task LoadCustomers()
         {
-            var serviceCustomers = _service.getAllCustomers();
-            Customers = new ObservableCollection<CustomerModel>(
-                serviceCustomers.Select(c => new CustomerModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Email = c.Email
-                }));
+            var serviceCustomers = await _service.GetAllCustomersAsync();
+            Customers = new ObservableCollection<CustomerModel>();
+            foreach (ICustomerModel c in serviceCustomers)
+            {
+                if (c is CustomerModel cm)
+                    Customers.Add(cm);
+                else
+                    Customers.Add(new CustomerModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Email = c.Email
+                    });
+            }
         }
 
         private bool CanAddCustomer() =>
             !string.IsNullOrWhiteSpace(NewCustomerName) &&
             !string.IsNullOrWhiteSpace(NewCustomerEmail);
 
-        private void AddCustomer()
+        private async Task AddCustomer()
         {
-            _service.AddCustomer(NewCustomerName, NewCustomerEmail);
-            LoadCustomers();
+            await _service.AddCustomerAsync(NewCustomerName, NewCustomerEmail);
+            await LoadCustomers();
             NewCustomerName = "";
             NewCustomerEmail = "";
         }
 
         private bool CanDeleteCustomer() => int.TryParse(DeleteCustomerId, out int id) && id > 0;
 
-        private void DeleteCustomer()
+        private async Task DeleteCustomer()
         {
             if (int.TryParse(DeleteCustomerId, out int id))
             {
-                _service.RemoveCustomer(id);
-                LoadCustomers();
+                await _service.RemoveCustomerAsync(id);
+                await LoadCustomers();
                 DeleteCustomerId = "";
             }
         }

@@ -1,10 +1,10 @@
 ﻿using LibraryService.API;
-using System.Windows.Controls;
 using System.Windows.Input;
+using PresentationLayer.Model.API;
 
 namespace PresentationLayer.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel
@@ -18,9 +18,9 @@ namespace PresentationLayer.ViewModel
         public ICommand ShowCustomersViewCommand { get; }
         public ICommand ShowInventoryStateViewCommand { get; }
 
-        private readonly ILibraryService _service;
+        private readonly IModelService _service;
 
-        public MainWindowViewModel(ILibraryService service)
+        public MainWindowViewModel(IModelService service)
         {
             _service = service;
 

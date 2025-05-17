@@ -21,7 +21,6 @@
         public abstract List<IServiceBook> getAllBooks();
         public abstract List<IServiceBookRecord> getAllBooksRecord();
         public abstract List<IServiceInventoryState> getAllInventoryStates();
-        public abstract void ClearAll();
         public static ILibraryService GenerateLibraryService()
         {
             return new LibraryServiceImp();

@@ -1,14 +1,14 @@
-﻿using LibraryService.API;
-using PresentationLayer.Model;
-using PresentationLayer.ViewModel;
+﻿using PresentationLayer.Model;
+using PresentationLayer.Model.API;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
+using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace PresentationLayer.ViewModel
 {
-    public class InventoryStatesViewModel : ViewModelBase
+    internal class InventoryStatesViewModel : ViewModelBase
     {
-        private readonly ILibraryService _service;
+        private readonly IModelService _service;
 
         private ObservableCollection<InventoryStateModel> _inventoryStates;
         public ObservableCollection<InventoryStateModel> InventoryStates
@@ -35,12 +35,6 @@ namespace PresentationLayer.ViewModel
                         NewInventoryStateBookId = "";
                         NewInventoryStateAvailable = "";
                     }
-                }
-            }
-        }
-            set             {
-                if (SetProperty(ref _selectedInventoryState, value))
-                {
                     ((RelayCommand)BorrowCommand).RaiseCanExecuteChanged();
                     ((RelayCommand)ReturnCommand).RaiseCanExecuteChanged();
                 }
@@ -85,61 +79,74 @@ namespace PresentationLayer.ViewModel
         public ICommand BorrowCommand { get; }
         public ICommand ReturnCommand { get; }
 
-        public InventoryStatesViewModel(ILibraryService service)
+        public InventoryStatesViewModel(IModelService service)
         {
             _service = service;
-            LoadInventoryStates();
+            AddInventoryStateCommand = new RelayCommand(async () => await AddInventoryState(), CanAddInventoryState);
+            DeleteInventoryStateCommand = new RelayCommand(async () => await DeleteInventoryState(), CanDeleteInventoryState);
+            BorrowCommand = new RelayCommand(async () => await BorrowCommandDo(), () => SelectedInventoryState != null);
+            ReturnCommand = new RelayCommand(async () => await ReturnCommandDo(), () => SelectedInventoryState != null);
+            _ = LoadInventoryStates();
+        }
 
-            AddInventoryStateCommand = new RelayCommand(AddInventoryState, CanAddInventoryState);
-            DeleteInventoryStateCommand = new RelayCommand(DeleteInventoryState, CanDeleteInventoryState);
-            BorrowCommand = new RelayCommand(BorrowCommandDo, () => SelectedInventoryState != null);
-            ReturnCommand = new RelayCommand(ReturnCommandDo, () => SelectedInventoryState != null);
-        }
-        private void BorrowCommandDo()
+        private async Task BorrowCommandDo()
         {
-            _service.BorrowBook(SelectedInventoryState.Id,1);
-            LoadInventoryStates();
+            if (SelectedInventoryState != null)
+            {
+                await _service.BorrowBookAsync(SelectedInventoryState.Id, 1);
+                await LoadInventoryStates();
+            }
         }
-        private void ReturnCommandDo()
+
+        private async Task ReturnCommandDo()
         {
-            _service.ReturnBook(SelectedInventoryState.Id,1);
-            LoadInventoryStates();
+            if (SelectedInventoryState != null)
+            {
+                await _service.ReturnBookAsync(SelectedInventoryState.Id, 1);
+                await LoadInventoryStates();
+            }
         }
-        private void LoadInventoryStates()
+
+        private async Task LoadInventoryStates()
         {
-            var serviceInventoryStates = _service.getAllInventoryStates();
-            InventoryStates = new ObservableCollection<InventoryStateModel>(
-                serviceInventoryStates.ConvertAll(b => new InventoryStateModel
-                {
-                    Id = b.book_id,
-                    Available = b.AvailableCopies
-                }));
+            var serviceInventoryStates = await _service.GetAllInventoryStatesAsync();
+            InventoryStates = new ObservableCollection<InventoryStateModel>();
+            foreach (IInventoryStateModel b in serviceInventoryStates)
+            {
+                if (b is InventoryStateModel im)
+                    InventoryStates.Add(im);
+                else
+                    InventoryStates.Add(new InventoryStateModel
+                    {
+                        Id = b.Id,
+                        Available = b.Available
+                    });
+            }
         }
 
         private bool CanAddInventoryState() =>
             int.TryParse(NewInventoryStateBookId, out int id) && id > 0 &&
             int.TryParse(NewInventoryStateAvailable, out int available) && available >= 0;
 
-
-        private void AddInventoryState()
+        private async Task AddInventoryState()
         {
             int id = int.Parse(NewInventoryStateBookId);
             int available = int.Parse(NewInventoryStateAvailable);
 
-            _service.AddInventoryState(id, available);
-            LoadInventoryStates();
+            await _service.AddInventoryStateAsync(id, available);
+            await LoadInventoryStates();
 
             NewInventoryStateAvailable = "";
         }
 
         private bool CanDeleteInventoryState() => int.TryParse(DeleteInventoryStateId, out int id) && id > 0;
 
-        private void DeleteInventoryState()
+        private async Task DeleteInventoryState()
         {
             if (int.TryParse(DeleteInventoryStateId, out int id))
             {
-                _service.RemoveInventoryState(id);
-                LoadInventoryStates();
+                await _service.RemoveInventoryStateAsync(id);
+                await LoadInventoryStates();
                 DeleteInventoryStateId = "";
             }
         }

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryService", "Library\LibraryService.csproj", "{3B4F7EEC-5907-4B80-8724-F6530954C450}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLogicTests", "LibraryTests\LibraryLogicTests.csproj", "{DD66506C-6FDA-4F15-9CBA-1DAD4A1448BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryServiceTest", "LibraryTests\LibraryServiceTest.csproj", "{DD66506C-6FDA-4F15-9CBA-1DAD4A1448BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryData", "LibraryData\LibraryData.csproj", "{E2CE6833-946D-4E70-85C3-5C3C00839E48}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayerTest", "PresentationLayerTest\PresentationLayerTest.csproj", "{EE95648D-EAD9-415D-8F2C-837848D985B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{95AD61AA-14A2-461C-BDF1-31D6F3E2A166}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95AD61AA-14A2-461C-BDF1-31D6F3E2A166}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95AD61AA-14A2-461C-BDF1-31D6F3E2A166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE95648D-EAD9-415D-8F2C-837848D985B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE95648D-EAD9-415D-8F2C-837848D985B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE95648D-EAD9-415D-8F2C-837848D985B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE95648D-EAD9-415D-8F2C-837848D985B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

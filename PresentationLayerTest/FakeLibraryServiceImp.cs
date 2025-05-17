@@ -1,17 +1,17 @@
 ﻿using LibraryData.API;
 using LibraryService.API;
 using LibraryService.Implementations;
-namespace LibraryService
+namespace PresentationLayerTest
 {
 
-    internal class LibraryServiceImp : ILibraryService
+    internal class FakeLibraryServiceImp : ILibraryService
     {
         IDataStorage dataStorage;
-        public LibraryServiceImp(IDataStorage dataStorage)
+        public FakeLibraryServiceImp(IDataStorage dataStorage)
         {
             this.dataStorage = dataStorage;
         }
-        public LibraryServiceImp()
+        public FakeLibraryServiceImp()
         {
             this.dataStorage = IDataStorage.GenerateStorage();
         }

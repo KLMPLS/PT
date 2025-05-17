@@ -3,6 +3,7 @@ using LibraryService.API;
 using PresentationLayer.ViewModel;
 using LibraryService;
 using LibraryData;
+using PresentationLayer.Model;
 namespace PresentationLayer.View
 {
     public partial class MainWindow : Window
@@ -10,7 +11,7 @@ namespace PresentationLayer.View
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(ILibraryService.GenerateLibraryService());
+            DataContext = new MainWindowViewModel(new ModelService());
         }
 
     }

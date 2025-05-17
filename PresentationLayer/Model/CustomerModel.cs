@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using LibraryService.API;
-
+using PresentationLayer.Model.API;  
 namespace PresentationLayer.Model
 {
-    public class CustomerModel : INotifyPropertyChanged
+    internal class CustomerModel : INotifyPropertyChanged, ICustomerModel
     {
         private int _id;
         private string _name;

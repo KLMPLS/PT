@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using LibraryService.API;
-
+using PresentationLayer.Model.API;
 namespace PresentationLayer.Model
 {
-    public class BookRecordModel : INotifyPropertyChanged
+    internal class BookRecordModel : INotifyPropertyChanged, IBookRecordModel
     {
         private int _id;
         private int _customerId;

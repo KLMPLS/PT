@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using LibraryService.API;
-
+using PresentationLayer.Model.API;
 namespace PresentationLayer.Model
 {
-    public class InventoryStateModel : INotifyPropertyChanged
+    internal class InventoryStateModel : INotifyPropertyChanged, IInventoryStateModel
     {
         private int _id;
         private int _available;

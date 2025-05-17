@@ -1,13 +1,16 @@
 ﻿using LibraryService.API;
 using PresentationLayer.Model;
+using PresentationLayer.Model.API;
 using PresentationLayer.ViewModel;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace PresentationLayer.ViewModel
 {
-    public class BooksViewModel : ViewModelBase
+    internal class BooksViewModel : ViewModelBase
     {
-        private readonly ILibraryService _service;
+        private readonly IModelService _service;
 
         private ObservableCollection<BookModel> _books;
         public ObservableCollection<BookModel> Books
@@ -24,12 +27,12 @@ namespace PresentationLayer.ViewModel
             {
                 if (SetProperty(ref _selectedBook, value))
                 {
-                    if(_selectedBook != null)
-                        {
-                            NewBookTitle = _selectedBook.Title;
-                            NewBookAuthor = _selectedBook.Author;
-                            NewBookGenre = _selectedBook.Genre;
-                        }
+                    if (_selectedBook != null)
+                    {
+                        NewBookTitle = _selectedBook.Title;
+                        NewBookAuthor = _selectedBook.Author;
+                        NewBookGenre = _selectedBook.Genre;
+                    }
                     else
                     {
                         NewBookTitle = "";
@@ -87,26 +90,32 @@ namespace PresentationLayer.ViewModel
         public ICommand AddBookCommand { get; }
         public ICommand DeleteBookCommand { get; }
 
-        public BooksViewModel(ILibraryService service)
+        public BooksViewModel(IModelService service)
         {
             _service = service;
-            LoadBooks();
-
-            AddBookCommand = new RelayCommand(AddBook, CanAddBook);
-            DeleteBookCommand = new RelayCommand(DeleteBook, CanDeleteBook);
+            AddBookCommand = new RelayCommand(async () => await AddBook(), CanAddBook);
+            DeleteBookCommand = new RelayCommand(async () => await DeleteBook(), CanDeleteBook);
+            _ = LoadBooks();
         }
 
-        private void LoadBooks()
+        private async Task LoadBooks()
         {
-            var serviceBooks = _service.getAllBooks();
-            Books = new ObservableCollection<BookModel>(
-                serviceBooks.ConvertAll(b => new BookModel
-                {
-                    Id = b.Id,
-                    Title = b.Title,
-                    Author = b.Author,
-                    Genre = b.Genre
-                }));
+            var serviceBooks = await _service.GetAllBooksAsync();
+            Books = new ObservableCollection<BookModel>();
+            foreach (IBookModel b in serviceBooks)
+            {
+                // If BookModel implements IBookModel, you can cast or use a constructor
+                if (b is BookModel bm)
+                    Books.Add(bm);
+                else
+                    Books.Add(new BookModel
+                    {
+                        Id = b.Id,
+                        Title = b.Title,
+                        Author = b.Author,
+                        Genre = b.Genre
+                    });
+            }
         }
 
         private bool CanAddBook() =>
@@ -114,10 +123,10 @@ namespace PresentationLayer.ViewModel
             !string.IsNullOrWhiteSpace(NewBookAuthor) &&
             !string.IsNullOrWhiteSpace(NewBookGenre);
 
-        private void AddBook()
+        private async Task AddBook()
         {
-            _service.AddBook(NewBookTitle, NewBookAuthor, NewBookGenre);
-            LoadBooks();
+            await _service.AddBookAsync(NewBookTitle, NewBookAuthor, NewBookGenre);
+            await LoadBooks();
 
             NewBookTitle = "";
             NewBookAuthor = "";
@@ -126,14 +135,14 @@ namespace PresentationLayer.ViewModel
 
         private bool CanDeleteBook() => int.TryParse(DeleteBookId, out int id) && id > 0;
 
-        private void DeleteBook()
+        private async Task DeleteBook()
         {
             if (int.TryParse(DeleteBookId, out int id))
             {
-                _service.RemoveBook(id);
-                LoadBooks();
+                await _service.RemoveBookAsync(id);
+                await LoadBooks();
                 DeleteBookId = "";
             }
         }
     }
-}
+}   

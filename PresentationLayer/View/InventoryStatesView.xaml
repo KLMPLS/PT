@@ -11,25 +11,31 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Input form -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Left" >
+        <!-- Top row with input and borrow/return -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <TextBox Width="150" Margin="5" 
-                 Text="{Binding NewInventoryStateBookId, UpdateSourceTrigger=PropertyChanged}" 
-           />
+            <!-- Left side: Add/Delete -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Top">
+                <TextBox Width="150" Margin="5"
+                         Text="{Binding NewInventoryStateBookId, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Width="150" Margin="5"
+                         Text="{Binding NewInventoryStateAvailable, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Content="Add InventoryState" Margin="10,0"
+                        Command="{Binding AddInventoryStateCommand}" />
+                <TextBox Width="100" Margin="5"
+                         Text="{Binding DeleteInventoryStateId, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Content="Delete InventoryState" Margin="5"
+                        Command="{Binding DeleteInventoryStateCommand}" />
+            </StackPanel>
 
-            <TextBox Width="150" Margin="5" 
-                 Text="{Binding NewInventoryStateAvailable, UpdateSourceTrigger=PropertyChanged}" 
-                 />
-
-            <Button Content="Add InventoryState" Margin="10,0" 
-                Command="{Binding AddInventoryStateCommand}" />
-        </StackPanel>
-
-            <!-- Right section: Borrow / Return -->
+            <!-- Right side: Borrow/Return -->
             <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="20,0,0,0">
                 <TextBlock Text="Selected ID:" FontWeight="Bold" Margin="0,0,0,5"/>
                 <TextBox Width="100" Text="{Binding SelectedInventoryState.Id}" IsReadOnly="True" Margin="0,0,0,10"/>
@@ -38,13 +44,14 @@
             </StackPanel>
         </Grid>
 
-        <!-- List of inventory states -->
-        <GroupBox Header="InventoryStates" Grid.Row="1">
+        <!-- InventoryStates list with DataTemplate -->
+        <GroupBox Header="InventoryStates" Grid.Row="1" Margin="0,10,0,0">
             <ListView ItemsSource="{Binding InventoryStates}" SelectedItem="{Binding SelectedInventoryState}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Text="{Binding Id}" Width="50"/>
+                            <TextBlock Text="{Binding Available}" Width="200" Margin="10,0,0,0"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

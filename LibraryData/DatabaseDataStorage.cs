@@ -156,9 +156,5 @@ namespace LibraryData
             }
             return stateList;
         }
-        public override void ClearAllBooks()
-        {
-            _context.ExecuteCommand("DELETE FROM Book");
-        }
     }
 }

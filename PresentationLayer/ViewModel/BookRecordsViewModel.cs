@@ -1,14 +1,15 @@
-﻿using LibraryService.API;
-using PresentationLayer.Model;
+﻿using PresentationLayer.Model;
+using PresentationLayer.Model.API;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
-    public class BookRecordsViewModel : ViewModelBase
+    internal class BookRecordsViewModel : ViewModelBase
     {
-        private readonly ILibraryService _service;
+        private readonly IModelService _model;
 
         private ObservableCollection<BookRecordModel> _bookRecords;
         public ObservableCollection<BookRecordModel> BookRecords
@@ -21,7 +22,6 @@ namespace PresentationLayer.ViewModel
         public BookRecordModel SelectedRecord
         {
             get => _selectedRecord;
-            //set => SetProperty(ref _selectedRecord, value);
             set
             {
                 if (SetProperty(ref _selectedRecord, value))
@@ -38,7 +38,6 @@ namespace PresentationLayer.ViewModel
                         NewCustomerId = "";
                         NewBookId = "";
                         NewType = "";
-                       // NewDate = "";
                     }
                 }
             }
@@ -50,9 +49,9 @@ namespace PresentationLayer.ViewModel
         {
             get => _newCustomerId;
             set
-            { 
+            {
                 if (SetProperty(ref _newCustomerId, value))
-                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged(); ; 
+                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -63,7 +62,7 @@ namespace PresentationLayer.ViewModel
             set
             {
                 if (SetProperty(ref _newBookId, value))
-                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged(); ;
+                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -74,7 +73,7 @@ namespace PresentationLayer.ViewModel
             set
             {
                 if (SetProperty(ref _newType, value))
-                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged(); ;
+                    ((RelayCommand)AddCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -93,7 +92,7 @@ namespace PresentationLayer.ViewModel
             set
             {
                 if (SetProperty(ref _deleteRecordId, value))
-                    ((RelayCommand)DeleteCommand).RaiseCanExecuteChanged(); ;
+                    ((RelayCommand)DeleteCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -101,31 +100,23 @@ namespace PresentationLayer.ViewModel
         public ICommand AddCommand { get; }
         public ICommand DeleteCommand { get; }
 
-        public BookRecordsViewModel(ILibraryService service)
+        public BookRecordsViewModel(IModelService model)
         {
-            _service = service;
+            _model = model;
 
-            AddCommand = new RelayCommand(AddRecord, CanAddRecord);
-            DeleteCommand = new RelayCommand(DeleteRecord, CanDeleteRecord);
+            AddCommand = new RelayCommand(async () => await AddRecord(), CanAddRecord);
+            DeleteCommand = new RelayCommand(async () => await DeleteRecord(), CanDeleteRecord);
 
-            LoadBookRecords();
+            _ = LoadBookRecords();
         }
 
-        private void LoadBookRecords()
+        private async Task LoadBookRecords()
         {
-            var records = _service.getAllBooksRecord(); 
+            var records = await _model.GetAllBooksRecordAsync();
             BookRecords = new ObservableCollection<BookRecordModel>();
-
-            foreach (var rec in records)
+            foreach (BookRecordModel rec in records)
             {
-                BookRecords.Add(new BookRecordModel
-                {
-                    Id = rec.Id,
-                    CustomerId = rec.customer_id,
-                    BookId = rec.book_id,
-                    Type = rec.type,
-                    Date = rec.Date
-                });
+                BookRecords.Add(rec);
             }
         }
 
@@ -137,17 +128,15 @@ namespace PresentationLayer.ViewModel
                 !string.IsNullOrWhiteSpace(NewType);
         }
 
-        private void AddRecord()
+        private async Task AddRecord()
         {
-            // Convert inputs
             int custId = int.Parse(NewCustomerId);
             int bookId = int.Parse(NewBookId);
 
-            _service.AddRecord(custId, bookId, NewType, NewDate);
+            await _model.AddRecordAsync(custId, bookId, NewType, NewDate);
 
-            LoadBookRecords();
+            await LoadBookRecords();
 
-            // Clear inputs
             NewCustomerId = "";
             NewBookId = "";
             NewType = "";
@@ -159,12 +148,12 @@ namespace PresentationLayer.ViewModel
             return int.TryParse(DeleteRecordId, out int id) && id > 0;
         }
 
-        private void DeleteRecord()
+        private async Task DeleteRecord()
         {
             if (int.TryParse(DeleteRecordId, out int id))
             {
-                _service.RemoveRecord(id);
-                LoadBookRecords();
+                await _model.RemoveRecordAsync(id);
+                await LoadBookRecords();
                 DeleteRecordId = "";
             }
         }
