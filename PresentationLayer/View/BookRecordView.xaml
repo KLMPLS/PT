@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto" />
             <!-- Add/Delete controls -->
             <RowDefinition Height="*" />
-            <!-- DataGrid -->
+            <!-- List -->
         </Grid.RowDefinitions>
 
         <!-- Controls for Add/Delete -->
@@ -34,18 +34,18 @@
             </StackPanel>
         </StackPanel>
 
-        <!-- DataGrid for book records -->
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding BookRecords}"
-                  SelectedItem="{Binding SelectedRecord}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerId}" />
-                <DataGridTextColumn Header="Book ID" Binding="{Binding BookId}" />
-                <DataGridTextColumn Header="Type" Binding="{Binding Type}" />
-                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=yyyy-MM-dd}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView Grid.Row="1" 
+                  ItemsSource="{Binding BookRecords}" 
+                  SelectedItem="{Binding SelectedRecord}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="{Binding Id}" Width="80"/>
+                        <TextBlock Text="{Binding CustomerId}" Width="100" Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding BookId}" Width="100" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

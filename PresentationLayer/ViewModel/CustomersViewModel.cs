@@ -20,7 +20,22 @@ namespace PresentationLayer.ViewModel
         public CustomerModel SelectedCustomer
         {
             get => _selectedCustomer;
-            set => SetProperty(ref _selectedCustomer, value);
+            set
+            {
+                if (SetProperty(ref _selectedCustomer, value))
+                {
+                    if (_selectedCustomer != null)
+                    {
+                        NewCustomerName = _selectedCustomer.Name;
+                        NewCustomerEmail = _selectedCustomer.Email;
+                    }
+                    else
+                    {
+                        NewCustomerName = "";
+                        NewCustomerEmail = "";
+                    }
+                }
+            }
         }
 
         private string _newCustomerName;

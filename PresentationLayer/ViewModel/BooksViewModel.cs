@@ -20,7 +20,24 @@ namespace PresentationLayer.ViewModel
         public BookModel SelectedBook
         {
             get => _selectedBook;
-            set => SetProperty(ref _selectedBook, value);
+            set
+            {
+                if (SetProperty(ref _selectedBook, value))
+                {
+                    if(_selectedBook != null)
+                        {
+                            NewBookTitle = _selectedBook.Title;
+                            NewBookAuthor = _selectedBook.Author;
+                            NewBookGenre = _selectedBook.Genre;
+                        }
+                    else
+                    {
+                        NewBookTitle = "";
+                        NewBookAuthor = "";
+                        NewBookGenre = "";
+                    }
+                }
+            }
         }
 
         private string _newBookTitle;

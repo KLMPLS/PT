@@ -43,13 +43,14 @@
 
         <GroupBox Header="Customers" Grid.Row="1">
             <ListView ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                        <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="150"/>
-                    </GridView>
-                </ListView.View>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding Id}" Width="50"/>
+                            <TextBlock Text="{Binding Name}" Width="200" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </GroupBox>
     </Grid>
