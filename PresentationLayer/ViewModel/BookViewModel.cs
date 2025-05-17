@@ -1,54 +1,35 @@
 ﻿using LibraryService.API;
+using PresentationLayer.Model;
 using PresentationLayer.ViewModel;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Input;
 
-public class BooksViewModel : INotifyPropertyChanged
+public class BooksViewModel : ViewModelBase
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged(string name) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    private readonly ILibraryService _service;
 
-    private ObservableCollection<IServiceBook> _books;
-    public ObservableCollection<IServiceBook> Books
+    private ObservableCollection<BookModel> _books;
+    public ObservableCollection<BookModel> Books
     {
         get => _books;
-        set
-        {
-            _books = value;
-            OnPropertyChanged(nameof(Books));
-        }
+        set => SetProperty(ref _books, value);
     }
 
-    private IServiceBook _selectedBook;
-
-    private ILibraryService _service;
-
-    public ICommand UpdateBooksCommand { get; }
-    public ICommand AddBookCommand { get; }
-    public ICommand DeleteBookCommand { get; }
-
-    public IServiceBook SelectedBook
+    private BookModel _selectedBook;
+    public BookModel SelectedBook
     {
         get => _selectedBook;
-        set
-        {
-            _selectedBook = value;
-            OnPropertyChanged(nameof(SelectedBook));
-            // Possibly load detailed view here
-        }
+        set => SetProperty(ref _selectedBook, value);
     }
-
-
 
     private string _newBookTitle;
     public string NewBookTitle
     {
         get => _newBookTitle;
-        set { _newBookTitle = value; 
-            OnPropertyChanged(nameof(NewBookTitle)); 
-            ((RelayCommand)AddBookCommand).RaiseCanExecuteChanged();
+        set
+        {
+            if (SetProperty(ref _newBookTitle, value))
+                ((RelayCommand)AddBookCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -56,35 +37,37 @@ public class BooksViewModel : INotifyPropertyChanged
     public string NewBookAuthor
     {
         get => _newBookAuthor;
-        set { _newBookAuthor = value;
-            OnPropertyChanged(nameof(NewBookAuthor));
-            ((RelayCommand)AddBookCommand).RaiseCanExecuteChanged();
+        set
+        {
+            if (SetProperty(ref _newBookAuthor, value))
+                ((RelayCommand)AddBookCommand).RaiseCanExecuteChanged();
         }
-
     }
 
     private string _newBookGenre;
     public string NewBookGenre
     {
         get => _newBookGenre;
-        set { _newBookGenre = value; 
-            OnPropertyChanged(nameof(NewBookGenre)); 
-            ((RelayCommand)AddBookCommand).RaiseCanExecuteChanged();
+        set
+        {
+            if (SetProperty(ref _newBookGenre, value))
+                ((RelayCommand)AddBookCommand).RaiseCanExecuteChanged();
         }
     }
 
-    // Property for DeleteBookId input
     private string _deleteBookId;
     public string DeleteBookId
     {
         get => _deleteBookId;
-        set { _deleteBookId = value; 
-            OnPropertyChanged(nameof(DeleteBookId));
-            ((RelayCommand)DeleteBookCommand).RaiseCanExecuteChanged();
+        set
+        {
+            if (SetProperty(ref _deleteBookId, value))
+                ((RelayCommand)DeleteBookCommand).RaiseCanExecuteChanged();
         }
     }
 
-
+    public ICommand AddBookCommand { get; }
+    public ICommand DeleteBookCommand { get; }
 
     public BooksViewModel(ILibraryService service)
     {
@@ -97,7 +80,15 @@ public class BooksViewModel : INotifyPropertyChanged
 
     private void LoadBooks()
     {
-        Books = new ObservableCollection<IServiceBook>(_service.getAllBooks());
+        var serviceBooks = _service.getAllBooks();
+        Books = new ObservableCollection<BookModel>(
+            serviceBooks.ConvertAll(b => new BookModel
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Author = b.Author,
+                Genre = b.Genre
+            }));
     }
 
     private bool CanAddBook() =>
@@ -110,7 +101,6 @@ public class BooksViewModel : INotifyPropertyChanged
         _service.AddBook(NewBookTitle, NewBookAuthor, NewBookGenre);
         LoadBooks();
 
-        // Clear inputs
         NewBookTitle = "";
         NewBookAuthor = "";
         NewBookGenre = "";
@@ -124,7 +114,6 @@ public class BooksViewModel : INotifyPropertyChanged
         {
             _service.RemoveBook(id);
             LoadBooks();
-
             DeleteBookId = "";
         }
     }

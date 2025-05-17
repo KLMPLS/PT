@@ -33,14 +33,14 @@ namespace LibraryData
             _context.Customers.InsertOnSubmit(customer);
             _context.SubmitChanges();
         }
-        public override void AddRecord(int customerId, int bookId, string type)
+        public override void AddRecord(int customerId, int bookId, string type, DateTime a)
         {
             BookRecord record = new BookRecord()
             {
                 book_id = bookId,
                 customer_id = customerId,
                 type = type,
-                date = DateTime.Now
+                date = a
             };
             _context.BookRecords.InsertOnSubmit(record);
             _context.SubmitChanges();

@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Library\LibraryService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="View\CustomersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

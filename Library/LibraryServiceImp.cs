@@ -27,9 +27,9 @@ namespace LibraryService
         {
             dataStorage.RemoveCustomer(id);
         }
-        public override void AddRecord(int customerId, int bookId, string type)
+        public override void AddRecord(int customerId, int bookId, string type, DateTime a)
         {
-            dataStorage.AddRecord(customerId, bookId, type);
+            dataStorage.AddRecord(customerId, bookId, type, a);
         }
         public override void RemoveRecord(int id)
         {

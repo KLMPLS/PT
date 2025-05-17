@@ -10,7 +10,7 @@
         public abstract void AddCustomer(string name, string email);
         public abstract void RemoveCustomer(int id);
 
-        public abstract void AddRecord(int customerId, int bookId, string type);
+        public abstract void AddRecord(int customerId, int bookId, string type, DateTime a);
         public abstract void RemoveRecord(int id);
         public abstract void AddInventoryState(int bookId, int availableCopies);
         public abstract void RemoveInventoryState(int bookId);
