@@ -104,7 +104,6 @@ namespace PresentationLayer.ViewModel
             Books = new ObservableCollection<BookModel>();
             foreach (IBookModel b in serviceBooks)
             {
-                // If BookModel implements IBookModel, you can cast or use a constructor
                 if (b is BookModel bm)
                     Books.Add(bm);
                 else

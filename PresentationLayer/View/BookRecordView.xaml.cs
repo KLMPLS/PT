@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace PresentationLayer.View
 {
-    /// <summary>
-    /// Interaction logic for BookRecordView.xaml
-    /// </summary>
     public partial class BookRecordView : UserControl
     {
         public BookRecordView()

@@ -11,9 +11,7 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- For input form -->
             <RowDefinition Height="*"/>
-            <!-- For list -->
         </Grid.RowDefinitions>
 
         <!-- Input form -->

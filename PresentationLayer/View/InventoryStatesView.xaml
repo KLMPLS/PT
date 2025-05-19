@@ -44,7 +44,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- InventoryStates list with DataTemplate -->
+        <!-- InventoryStates list -->
         <GroupBox Header="InventoryStates" Grid.Row="1" Margin="0,10,0,0">
             <ListView ItemsSource="{Binding InventoryStates}" SelectedItem="{Binding SelectedInventoryState}">
                 <ListView.ItemTemplate>

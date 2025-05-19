@@ -11,9 +11,7 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <!-- Add/Delete controls -->
             <RowDefinition Height="*" />
-            <!-- List -->
         </Grid.RowDefinitions>
 
         <!-- Controls for Add/Delete -->
