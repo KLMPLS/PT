@@ -98,7 +98,7 @@ namespace LibraryService
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            dataStorage?.Dispose();
         }
     }
 }
