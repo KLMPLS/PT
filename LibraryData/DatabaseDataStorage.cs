@@ -156,5 +156,10 @@ namespace LibraryData
             }
             return stateList;
         }
+        public override void Dispose()
+        {
+            _context?.Dispose();
+        }
+
     }
 }

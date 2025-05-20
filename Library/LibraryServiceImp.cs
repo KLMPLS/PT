@@ -4,7 +4,7 @@ using LibraryService.Implementations;
 namespace LibraryService
 {
 
-    internal class LibraryServiceImp : ILibraryService
+    internal class LibraryServiceImp : ILibraryService, IDisposable
     {
         IDataStorage dataStorage;
         public LibraryServiceImp(IDataStorage dataStorage)
@@ -94,6 +94,11 @@ namespace LibraryService
                 inventoryStates.Add(new ServiceInventoryState(state.book_id, state.AvailableCopies));
             }
             return inventoryStates;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
