@@ -71,7 +71,11 @@ namespace LibraryData
         }
         public override IBook FindBook(int id)
         {
-            Book state = _context.Books.Single(a => a.Id == id);
+            Book? state = _context.Books.Where(a => a.Id == id).Select(a => a).FirstOrDefault();
+            if (state == null)
+            {
+                throw new KeyNotFoundException($"Book with ID {id} not found.");
+            }
             return new BookO(state.Id, state.title, state.author, state.genre);
         }
         public override ICustomer FindCustomer(int id)
@@ -115,11 +119,23 @@ namespace LibraryData
 
         public override List<ICustomer> getAllCustomers()
         {
-            var customers = (from customer in _context.Customers select FindCustomer(customer.Id));
+            IQueryable<int> ids = from customer in _context.Customers select customer.Id;
             List<ICustomer> customerList = new List<ICustomer>();
-            foreach (var customer in customers)
+            foreach (var id in ids)
             {
-                customerList.Add(customer);
+                ICustomer cust = FindCustomer(id);
+                customerList.Add(cust);
+            }
+            return customerList;
+        }
+        public List<ICustomer> getAllCustomers(string name)
+        {
+            IQueryable<int> ids = _context.Customers.Where(c => c.name.Contains(name)).Select(c => c.Id);
+            List<ICustomer> customerList = new List<ICustomer>();
+            foreach (var id in ids)
+            {
+                ICustomer cust = FindCustomer(id);
+                customerList.Add(cust);
             }
             return customerList;
         }

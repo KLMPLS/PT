@@ -24,7 +24,6 @@ namespace PresentationLayerTest
             imodel = model;
         }
 
-        // Helper method to wait for a condition or timeout
         private async Task WaitForConditionAsync(Func<bool> condition, int timeoutMs = 2000, int pollMs = 50)
         {
             var start = DateTime.UtcNow;
