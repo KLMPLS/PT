@@ -97,6 +97,11 @@ namespace PresentationLayerTest
         public override List<IBook> getAllBooks() => new(books);
         public override List<IBookRecord> getAllBooksRecord() => new(records);
         public override List<IInventoryState> getAllInventoryStates() => new(inventoryStates);
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿namespace LibraryData.API
 {
-    public abstract class IDataStorage
+    public abstract class IDataStorage : IDisposable
     {
         public abstract void AddBook(string title,string author,string genre);
         public abstract void RemoveBook(int id);
@@ -23,5 +23,8 @@
         {
             return new DatabaseDataStorage();
         }
+
+        public abstract void Dispose();
+
     }
 }
