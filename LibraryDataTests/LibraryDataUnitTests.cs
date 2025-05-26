@@ -1,4 +1,5 @@
 ﻿using LibraryData.API;
+using LibraryDataTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -14,15 +15,11 @@ namespace LibraryDataTest
         {
             using (IDataStorage storage = IDataStorage.GenerateStorage(connect))
             {
-                string title = "UnitTest_UniqueBook";
-                string author = "UnitTester";
-                string genre = "TestGenre";
-
-                storage.AddBook(title, author, genre);
-                var book = storage.getAllBooks().FirstOrDefault(b => b.Title == title && b.Author == author);
+                CreateData.generateBookData(storage);
+                var book = storage.getAllBooks().FirstOrDefault(b => b.Title == "UnitTest_UniqueBook" && b.Author == "UnitTester");
 
                 Assert.IsNotNull(book);
-                Assert.AreEqual(genre, book.Genre);
+                Assert.AreEqual("TestGenre", book.Genre);
 
                 storage.RemoveBook(book.Id);
             }
@@ -33,11 +30,8 @@ namespace LibraryDataTest
         {
             using (IDataStorage storage = IDataStorage.GenerateStorage(connect))
             {
-                string name = "TestUser_Unique";
-                string email = "unique_email@example.com";
-
-                storage.AddCustomer(name, email);
-                var customer = storage.getAllCustomers().FirstOrDefault(c => c.Name == name && c.Email == email);
+                CreateData.generateCustomerData(storage);
+                var customer = storage.getAllCustomers().FirstOrDefault(c => c.Name == "TestUser_Unique" && c.Email == "unique_email@example.com");
 
                 Assert.IsNotNull(customer);
 
