@@ -8,7 +8,7 @@ namespace LibraryDataTest
     [TestClass]
     public class LibraryDataUnitTests
     {
-        String connect = "\"Data Source=(LocalDB)\\\\MSSQLLocalDB;AttachDbFilename=C:\\\\Users\\\\GniewkoPC\\\\Desktop\\\\PT\\\\PT\\\\LibraryData\\\\Database1.mdf;Integrated Security=True\"";
+        String connect = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\GniewkoPC\\Desktop\\PT\\PT\\LibraryData\\Database1.mdf;Integrated Security=True";
         [TestMethod]
         public void BookTests()
         {
