@@ -8,10 +8,11 @@ namespace LibraryDataTest
     [TestClass]
     public class LibraryDataUnitTests
     {
+        String connect = "\"Data Source=(LocalDB)\\\\MSSQLLocalDB;AttachDbFilename=C:\\\\Users\\\\GniewkoPC\\\\Desktop\\\\PT\\\\PT\\\\LibraryData\\\\Database1.mdf;Integrated Security=True\"";
         [TestMethod]
         public void BookTests()
         {
-            using (IDataStorage storage = IDataStorage.GenerateStorage())
+            using (IDataStorage storage = IDataStorage.GenerateStorage(connect))
             {
                 string title = "UnitTest_UniqueBook";
                 string author = "UnitTester";
@@ -30,7 +31,7 @@ namespace LibraryDataTest
         [TestMethod]
         public void CustomerTests()
         {
-            using (IDataStorage storage = IDataStorage.GenerateStorage())
+            using (IDataStorage storage = IDataStorage.GenerateStorage(connect))
             {
                 string name = "TestUser_Unique";
                 string email = "unique_email@example.com";
@@ -47,7 +48,7 @@ namespace LibraryDataTest
         [TestMethod]
         public void BookRecordTests()
         {
-            using (IDataStorage storage = IDataStorage.GenerateStorage())
+            using (IDataStorage storage = IDataStorage.GenerateStorage(connect))
             {
                 string bookTitle = "UnitTest_BookRecordBook";
                 string customerName = "UnitTest_Customer";
@@ -74,7 +75,7 @@ namespace LibraryDataTest
         [TestMethod]
         public void InventoryStateTests()
         {
-            using (IDataStorage storage = IDataStorage.GenerateStorage())
+            using (IDataStorage storage = IDataStorage.GenerateStorage(connect))
             {
                 string bookTitle = "UnitTest_InventoryBook";
 

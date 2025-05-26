@@ -23,7 +23,10 @@
         {
             return new DatabaseDataStorage();
         }
-
+        public static IDataStorage GenerateStorage(String a)
+        {
+            return new DatabaseDataStorage(a);
+        }
         public abstract void Dispose();
 
     }
